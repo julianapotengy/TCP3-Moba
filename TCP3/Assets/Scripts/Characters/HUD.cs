@@ -24,6 +24,14 @@ public class HUD : MonoBehaviour
             {
                 inputPanel.GetChild(i).GetComponentInChildren<Text>().text = InputManager.IM.walk.ToString();
             }
+            else if (inputPanel.GetChild(i).name == "AutoAtkButton")
+            {
+                inputPanel.GetChild(i).GetComponentInChildren<Text>().text = InputManager.IM.autoAtk.ToString();
+            }
+            else if (inputPanel.GetChild(i).name == "SeeAtkRangeButton")
+            {
+                inputPanel.GetChild(i).GetComponentInChildren<Text>().text = InputManager.IM.seeAtkRange.ToString();
+            }
             else if (inputPanel.GetChild(i).name == "StoreButton")
             {
                 inputPanel.GetChild(i).GetComponentInChildren<Text>().text = InputManager.IM.store.ToString();
@@ -100,6 +108,18 @@ public class HUD : MonoBehaviour
                 PlayerPrefs.SetString("walkKey", InputManager.IM.walk.ToString());
                 break;
 
+            case "autoAtk":
+                InputManager.IM.store = newKey;
+                buttonText.text = InputManager.IM.store.ToString();
+                PlayerPrefs.SetString("autoAtkKey", InputManager.IM.autoAtk.ToString());
+                break;
+
+            case "seeAtkRange":
+                InputManager.IM.store = newKey;
+                buttonText.text = InputManager.IM.store.ToString();
+                PlayerPrefs.SetString("seeAtkRangeKey", InputManager.IM.seeAtkRange.ToString());
+                break;
+            
             case "store":
                 InputManager.IM.store = newKey; 
                 buttonText.text = InputManager.IM.store.ToString(); 
