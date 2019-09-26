@@ -11,6 +11,9 @@ public class InputManager : MonoBehaviour
     public KeyCode autoAtk { get; set; }
     public KeyCode seeAtkRange { get; set; }
     public KeyCode store { get; set; }
+    public KeyCode skill1 { get; set; }
+    public KeyCode skill2 { get; set; }
+    public KeyCode skill3 { get; set; }
 
     void Awake()
     {
@@ -29,5 +32,8 @@ public class InputManager : MonoBehaviour
         autoAtk = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("autoAtkKey", "Mouse1"));
         seeAtkRange = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("seeAtkRangeKey", "A"));
         store = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("storeKey", "P"));
+        skill1 = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("skill1Key", "Q"));
+        skill2 = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("skill2Key", "W"));
+        skill3 = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("skill3Key", "E"));
     }
 }

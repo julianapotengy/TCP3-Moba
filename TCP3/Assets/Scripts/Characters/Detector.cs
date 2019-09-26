@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Detector : Characters
 {
-    private void Awake()
+    private void Start()
     {
-        this.name = "Detector_" + gameObject.transform.parent.GetComponent<Character1>().GetName();
-        this.transform.localScale = new Vector3(gameObject.transform.parent.GetComponent<Character1>().GetAtkRange(), 0.0005f, gameObject.transform.parent.GetComponent<BaseScript>().GetAtkRange());
+        this.name = "Detector_" + gameObject.transform.parent.GetComponent<BaseScript>().GetName();
+        this.transform.localScale = new Vector3(gameObject.transform.parent.GetComponent<BaseScript>().GetAtkRange(), 0.0005f, gameObject.transform.parent.GetComponent<BaseScript>().GetAtkRange());
     }
 
     private void OnTriggerEnter(Collider other)

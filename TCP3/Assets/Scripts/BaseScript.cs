@@ -20,12 +20,6 @@ public class BaseScript : MonoBehaviour
     //public ParticleSystem ShootPivot; // usar depois
     public GameObject shootPivot;
 
-    private void Awake()
-    {
-        SetMaxLife(baseLife);
-        life = maxLife;
-    }
-
     #region Life
     public float GetLife()
     {
@@ -47,7 +41,7 @@ public class BaseScript : MonoBehaviour
         maxLife += status;
     }
 
-    public void CheckLife()
+    protected void CheckLife()
     {
         if(life >= maxLife)
         {

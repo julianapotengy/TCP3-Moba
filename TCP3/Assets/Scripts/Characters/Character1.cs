@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class Character1 : PlayableCharacters
 {
@@ -12,12 +13,27 @@ public class Character1 : PlayableCharacters
         atkDamage = 10;
         atkRange = 10;
         atkSpeed = 2;
-        moveSpeed = 8;
+        baseMoveSpeed = 8;
+        moveSpeed = baseMoveSpeed;
+        temporaryMoveSpeed = moveSpeed;
 		atkSpeedCount = 2;
-        Debug.Log("Vida: " + GetLife() + "; Nome: " + GetName());
+
+        //skill1 = Skill1_Character1;
+        skills.Add(gameObject.AddComponent<Skill1_Character1>());
+        skills.Add(gameObject.AddComponent<Skill2_Character1>());
+        skills.Add(gameObject.AddComponent<Skill3_Character1>());
 
         agent = this.GetComponent<NavMeshAgent>();
         agent.speed = moveSpeed;
+
+        levelTxt = GameObject.Find("LevelText").GetComponent<Text>();
+        lifeText = GameObject.Find("LifeText").GetComponent<Text>();
+        level = 1;
+        canUpSkill = true;
+        skillUped = false;
+
+        SetMaxLife(baseLife);
+        life = maxLife;
     }
 
     private void Start()
@@ -30,5 +46,17 @@ public class Character1 : PlayableCharacters
         Movement();
         PlayableAutoAttack();
         CheckAtkRange();
+        ExperienceSystem();
+        CheckLife();
+        UseSkills();
+
+        levelTxt.text = "Level: " + level;
+        lifeText.text = "Life: " + life + " / " + maxLife;
+        
+        #region Apresentacao
+        XPAPRESENTACAO();
+        Debug.Log("experience: " + experience + " level: " + level);
+        Debug.Log("Vida: " + GetLife() + "; Nome: " + GetName());
+        #endregion
     }
 }

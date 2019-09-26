@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class Characters : BaseScript
 {
+    protected float baseMoveSpeed;
     protected float moveSpeed;
+    protected float temporaryMoveSpeed;
+    protected float timeBuffingSpeed;
     protected float resistance;
     protected string specialAtk;
     protected string movement;
@@ -15,5 +18,21 @@ public class Characters : BaseScript
     public List<BaseScript> GetCharactersOnArea()
     {
         return characteresOnArea;
+    }
+
+    public float GetMoveSpeed()
+    {
+        return moveSpeed;
+    }
+
+    public void BuffMoveSpeed(float quantity)
+    {
+        temporaryMoveSpeed += quantity;
+    }
+
+    public void AddMoveSpeed(float quantity)
+    {
+        moveSpeed += quantity;
+        temporaryMoveSpeed = moveSpeed;
     }
 }

@@ -36,6 +36,18 @@ public class HUD : MonoBehaviour
             {
                 inputPanel.GetChild(i).GetComponentInChildren<Text>().text = InputManager.IM.store.ToString();
             }
+            else if (inputPanel.GetChild(i).name == "Skill1Button")
+            {
+                inputPanel.GetChild(i).GetComponentInChildren<Text>().text = InputManager.IM.skill1.ToString();
+            }
+            else if (inputPanel.GetChild(i).name == "Skill2Button")
+            {
+                inputPanel.GetChild(i).GetComponentInChildren<Text>().text = InputManager.IM.skill2.ToString();
+            }
+            else if (inputPanel.GetChild(i).name == "Skill3Button")
+            {
+                inputPanel.GetChild(i).GetComponentInChildren<Text>().text = InputManager.IM.skill3.ToString();
+            }
         }
     }
 
@@ -124,6 +136,24 @@ public class HUD : MonoBehaviour
                 InputManager.IM.store = newKey; 
                 buttonText.text = InputManager.IM.store.ToString(); 
                 PlayerPrefs.SetString("storeKey", InputManager.IM.store.ToString()); 
+                break;
+
+            case "skill1":
+                InputManager.IM.store = newKey;
+                buttonText.text = InputManager.IM.store.ToString();
+                PlayerPrefs.SetString("skill1Key", InputManager.IM.skill1.ToString());
+                break;
+
+            case "skill2":
+                InputManager.IM.store = newKey;
+                buttonText.text = InputManager.IM.store.ToString();
+                PlayerPrefs.SetString("skill2Key", InputManager.IM.skill2.ToString());
+                break;
+
+            case "skill3":
+                InputManager.IM.store = newKey;
+                buttonText.text = InputManager.IM.store.ToString();
+                PlayerPrefs.SetString("skill3Key", InputManager.IM.skill3.ToString());
                 break;
         }
         yield return null;
