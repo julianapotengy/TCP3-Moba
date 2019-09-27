@@ -9,7 +9,7 @@ public class Skill2_Character1 : SkillsBase
         skillName = "Skill 2";
         description = "Munição especial. A personagem carrega a arma com uma munição especial, " +
             "e nos próximos 3 ataques básicos dá 20% de dano a mais nos alvos.";
-        level = 1;
+        level = 0;
         baseCooldown = 14;
         cooldown = baseCooldown;
         cooldownCount = cooldown;
@@ -22,7 +22,7 @@ public class Skill2_Character1 : SkillsBase
 
     public override void DoIt()
     {
-        if (cooldownCount >= cooldown)
+        if (cooldownCount >= cooldown && level >= 1)
         {
             Debug.Log(skillName);
             cooldownCount = 0;

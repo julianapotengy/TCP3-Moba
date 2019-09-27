@@ -15,10 +15,7 @@ public class PlayableCharacters : Characters
     protected bool canUpUlt;
     protected bool skillUped;
     protected bool canLevelUp;
-    
-    protected SkillsBase skill1;
-    protected SkillsBase skill2;
-    protected SkillsBase skill3;
+    protected int skillsToUp;
 
     protected List<SkillsBase> skills = new List<SkillsBase>(3);
 
@@ -112,21 +109,32 @@ public class PlayableCharacters : Characters
     
     protected void ExperienceSystem()
     {
-        if ((level.Equals(2) || level.Equals(3) || level.Equals(5) || level.Equals(6) || level.Equals(7) || level.Equals(9) || level.Equals(10) || level.Equals(11)) && canLevelUp)
+        if(level.Equals(1) && canLevelUp)
+        {
+            SetMaxLife(baseLife);
+            life = maxLife;
+            LevelUp();
+        }
+        else if ((level.Equals(2) || level.Equals(3) || level.Equals(5) || level.Equals(6) || level.Equals(7) || level.Equals(9) || level.Equals(10) || level.Equals(11)) && canLevelUp)
         {
             SetMaxLife(Mathf.Round(maxLife / 10));
             life += Mathf.Round(maxLife / 10);
-            canUpSkill = true;
-            canLevelUp = false;
+            LevelUp();
         }
         else if((level.Equals(4) || level.Equals(8) || level.Equals(12)) && canLevelUp)
         {
             SetMaxLife(Mathf.Round(maxLife / 10));
             life += Mathf.Round(maxLife / 10);
-            canUpSkill = true;
             canUpUlt = true;
-            canLevelUp = false;
+            LevelUp();
         }
+    }
+
+    protected void LevelUp()
+    {
+        canUpSkill = true;
+        skillsToUp += 1;
+        canLevelUp = false;
     }
 
     protected void XPAPRESENTACAO() //apresentacao
@@ -141,6 +149,7 @@ public class PlayableCharacters : Characters
     }
     #endregion
 
+    #region Skills
     protected void UseSkills()
     {
         if(Input.GetKeyDown(InputManager.IM.skill1))
@@ -156,4 +165,32 @@ public class PlayableCharacters : Characters
             skills[2].DoIt();
         }
     }
+
+    protected void UpSkills()
+    {
+        if(skillsToUp > 0 && Input.GetKey(InputManager.IM.upSkill) && canUpSkill)
+        {
+            if (Input.GetKeyDown(InputManager.IM.skill1))
+            {
+                skills[0].AddLevel(1);
+                skillsToUp -= 1;
+            }
+            else if (Input.GetKeyDown(InputManager.IM.skill2))
+            {
+                skills[1].AddLevel(1);
+                skillsToUp -= 1;
+            }
+            else if (Input.GetKeyDown(InputManager.IM.skill3) && canUpUlt)
+            {
+                skills[2].AddLevel(1);
+                skillsToUp -= 1;
+                canUpUlt = false;
+            }
+        }
+        else if(skillsToUp <= 0)
+        {
+            canUpSkill = false;
+        }
+    }
+    #endregion
 }

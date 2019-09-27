@@ -9,7 +9,7 @@ public class Skill3_Character1 : SkillsBase
         skillName = "Skill 3";
         description = "A personagem entra em modo furtivo, ganhando invisibilidade por um período máximo de tempo, " +
             "ou até usar alguma habilidade ativa, de item ou ataque básico.";
-        level = 1;
+        level = 0;
         baseCooldown = 60;
         cooldown = baseCooldown;
         cooldownCount = cooldown;
@@ -22,7 +22,7 @@ public class Skill3_Character1 : SkillsBase
 
     public override void DoIt()
     {
-        if (cooldownCount >= cooldown)
+        if (cooldownCount >= cooldown && level >= 1)
         {
             Debug.Log(skillName);
             cooldownCount = 0;

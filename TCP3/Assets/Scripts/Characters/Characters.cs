@@ -25,9 +25,15 @@ public class Characters : BaseScript
         return moveSpeed;
     }
 
-    public void BuffMoveSpeed(float quantity)
+    public void BuffMoveSpeed(float quantity, float time)
     {
-        temporaryMoveSpeed += quantity;
+        temporaryMoveSpeed = moveSpeed;
+        moveSpeed += quantity;
+        timeBuffingSpeed += Time.deltaTime;
+        if (timeBuffingSpeed <= time)
+        {
+            moveSpeed = temporaryMoveSpeed;
+        }
     }
 
     public void AddMoveSpeed(float quantity)

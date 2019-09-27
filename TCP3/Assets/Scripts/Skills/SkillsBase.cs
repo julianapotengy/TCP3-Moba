@@ -23,8 +23,7 @@ public class SkillsBase : MonoBehaviour
     protected bool improved;
     protected float duration;
     protected int status;
-
-    protected float timeChangingSpeed;
+    protected bool hitTarget;
 
     #region O que faz
     protected void Invisibility()
@@ -64,11 +63,7 @@ public class SkillsBase : MonoBehaviour
 
     protected void ChangeSpeed(float quantity, float time)
     {
-        timeChangingSpeed += Time.deltaTime;
-        while (timeChangingSpeed <= time)
-        {
-            target.GetComponent<Characters>().BuffMoveSpeed(quantity);
-        }
+        target.GetComponent<Characters>().BuffMoveSpeed(quantity, time);
     }
 
     protected void Dash()
@@ -90,6 +85,26 @@ public class SkillsBase : MonoBehaviour
     public float GetCooldown()
     {
         return cooldown;
+    }
+
+    public int GetLevel()
+    {
+        return level;
+    }
+
+    public void AddLevel(int quantity)
+    {
+        level += quantity;
+    }
+
+    public void SetTarget(Transform t)
+    {
+        target = t;
+    }
+
+    public void Hitted(bool hitted)
+    {
+        hitTarget = hitted;
     }
 
     public virtual void DoIt()

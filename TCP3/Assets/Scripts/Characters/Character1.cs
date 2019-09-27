@@ -29,11 +29,9 @@ public class Character1 : PlayableCharacters
         levelTxt = GameObject.Find("LevelText").GetComponent<Text>();
         lifeText = GameObject.Find("LifeText").GetComponent<Text>();
         level = 1;
+        canLevelUp = true;
         canUpSkill = true;
         skillUped = false;
-
-        SetMaxLife(baseLife);
-        life = maxLife;
     }
 
     private void Start()
@@ -43,11 +41,12 @@ public class Character1 : PlayableCharacters
 
     private void Update()
     {
-        Movement();
         PlayableAutoAttack();
+        Movement();
         CheckAtkRange();
         ExperienceSystem();
         CheckLife();
+        UpSkills();
         UseSkills();
 
         levelTxt.text = "Level: " + level;
@@ -56,7 +55,6 @@ public class Character1 : PlayableCharacters
         #region Apresentacao
         XPAPRESENTACAO();
         Debug.Log("experience: " + experience + " level: " + level);
-        Debug.Log("Vida: " + GetLife() + "; Nome: " + GetName());
         #endregion
     }
 }

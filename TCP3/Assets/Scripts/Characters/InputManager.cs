@@ -14,6 +14,7 @@ public class InputManager : MonoBehaviour
     public KeyCode skill1 { get; set; }
     public KeyCode skill2 { get; set; }
     public KeyCode skill3 { get; set; }
+    public KeyCode upSkill { get; set; }
 
     void Awake()
     {
@@ -35,5 +36,6 @@ public class InputManager : MonoBehaviour
         skill1 = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("skill1Key", "Q"));
         skill2 = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("skill2Key", "W"));
         skill3 = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("skill3Key", "E"));
+        upSkill = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("upSkillKey", "LeftControl"));
     }
 }
