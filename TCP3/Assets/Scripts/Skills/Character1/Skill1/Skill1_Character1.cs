@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Skill1_Character1 : SkillsBase
 {
     protected Vector3 direction;
-    [SerializeField] private GameObject projectile;
-    [SerializeField] private GameObject shootPivot;
+    [SerializeField] protected GameObject projectile;
+    [SerializeField] protected GameObject shootPivot;
 
     private void Awake()
     {
@@ -15,13 +16,17 @@ public class Skill1_Character1 : SkillsBase
             "causando dano e aplicando efeito de lentidão no alvo por 2s.";
         range = 5;
         level = 0;
+        maxLevel = 3;
         baseCooldown = 7;
         cooldown = baseCooldown;
         cooldownCount = cooldown;
         baseDamage = 30;
         damage = baseDamage;
         canUse = true;
+        choosedUpgrading = false;
 
+        levelTxt = GameObject.Find("Skill1TextLevel").GetComponent<Text>();
+        cooldownTxt = GameObject.Find("Skill1TextCD").GetComponent<Text>();
         shootPivot = GameObject.Find("Character");
     }
 
@@ -29,6 +34,14 @@ public class Skill1_Character1 : SkillsBase
     {
         cooldownCount += Time.deltaTime;
         HitTarget();
+        Levels();
+
+        levelTxt.text = "Level: " + level;
+        if(cooldownCount <= cooldown)
+        {
+            cooldownTxt.text = "CD: " + Mathf.Round(cooldownCount) + "s";
+        }
+        else cooldownTxt.text = "CD: " + Mathf.Round(cooldown) + "s";
     }
 
     public override void DoIt()
@@ -51,6 +64,7 @@ public class Skill1_Character1 : SkillsBase
         {
             CauseDamage();
             ChangeSpeed(-10, 2);
+            hitTarget = false;
         }
     }
 }

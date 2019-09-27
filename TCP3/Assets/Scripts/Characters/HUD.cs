@@ -48,6 +48,10 @@ public class HUD : MonoBehaviour
             {
                 inputPanel.GetChild(i).GetComponentInChildren<Text>().text = InputManager.IM.skill3.ToString();
             }
+            else if (inputPanel.GetChild(i).name == "UpSkillButton")
+            {
+                inputPanel.GetChild(i).GetComponentInChildren<Text>().text = InputManager.IM.upSkill.ToString();
+            }
         }
     }
 
@@ -154,6 +158,12 @@ public class HUD : MonoBehaviour
                 InputManager.IM.store = newKey;
                 buttonText.text = InputManager.IM.store.ToString();
                 PlayerPrefs.SetString("skill3Key", InputManager.IM.skill3.ToString());
+                break;
+
+            case "upSkill":
+                InputManager.IM.store = newKey;
+                buttonText.text = InputManager.IM.store.ToString();
+                PlayerPrefs.SetString("upSkillKey", InputManager.IM.upSkill.ToString());
                 break;
         }
         yield return null;

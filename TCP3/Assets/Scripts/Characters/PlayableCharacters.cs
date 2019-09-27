@@ -12,10 +12,10 @@ public class PlayableCharacters : Characters
     protected int passiveCharacter;
     protected int passiveClass;
     protected bool canUpSkill;
-    protected bool canUpUlt;
-    protected bool skillUped;
     protected bool canLevelUp;
     protected int skillsToUp;
+    protected int ultToUp;
+    protected bool invisible;
 
     protected List<SkillsBase> skills = new List<SkillsBase>(3);
 
@@ -115,17 +115,17 @@ public class PlayableCharacters : Characters
             life = maxLife;
             LevelUp();
         }
-        else if ((level.Equals(2) || level.Equals(3) || level.Equals(5) || level.Equals(6) || level.Equals(7) || level.Equals(9) || level.Equals(10) || level.Equals(11)) && canLevelUp)
+        else if ((level.Equals(2) || level.Equals(4) || level.Equals(5) || level.Equals(7) || level.Equals(8)) && canLevelUp)
         {
             SetMaxLife(Mathf.Round(maxLife / 10));
             life += Mathf.Round(maxLife / 10);
             LevelUp();
         }
-        else if((level.Equals(4) || level.Equals(8) || level.Equals(12)) && canLevelUp)
+        else if((level.Equals(3) || level.Equals(6) || level.Equals(9)) && canLevelUp)
         {
             SetMaxLife(Mathf.Round(maxLife / 10));
             life += Mathf.Round(maxLife / 10);
-            canUpUlt = true;
+            ultToUp += 1;
             LevelUp();
         }
     }
@@ -141,7 +141,7 @@ public class PlayableCharacters : Characters
     {
         if(Input.GetKeyDown(KeyCode.G))
         {
-            if (level >= 1 && level <= 11)
+            if (level >= 1 && level <= 8)
             {
                 GainExperienceInJungle(100);
             }
@@ -170,21 +170,21 @@ public class PlayableCharacters : Characters
     {
         if(skillsToUp > 0 && Input.GetKey(InputManager.IM.upSkill) && canUpSkill)
         {
-            if (Input.GetKeyDown(InputManager.IM.skill1))
+            if (Input.GetKeyDown(InputManager.IM.skill1) && skills[0].GetLevel() < skills[0].GetMaxLevel())
             {
                 skills[0].AddLevel(1);
                 skillsToUp -= 1;
             }
-            else if (Input.GetKeyDown(InputManager.IM.skill2))
+            else if (Input.GetKeyDown(InputManager.IM.skill2) && skills[1].GetLevel() < skills[1].GetMaxLevel())
             {
                 skills[1].AddLevel(1);
                 skillsToUp -= 1;
             }
-            else if (Input.GetKeyDown(InputManager.IM.skill3) && canUpUlt)
+            else if (Input.GetKeyDown(InputManager.IM.skill3) && skills[2].GetLevel() < skills[2].GetMaxLevel() && ultToUp > 0)
             {
                 skills[2].AddLevel(1);
+                ultToUp -= 1;
                 skillsToUp -= 1;
-                canUpUlt = false;
             }
         }
         else if(skillsToUp <= 0)

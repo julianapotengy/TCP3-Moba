@@ -8,29 +8,43 @@ public class Projectile_Skill1_Character1 : MonoBehaviour
     float damage;
     Transform target;
     Vector3 direction;
-    Skill1_Character1 parent;
+    SkillsBase parent;
     float range;
     float startPosZ;
+    float calculatePos;
 
     private void Awake()
     {
-        speed = 300;
+        speed = 400;
         startPosZ = gameObject.transform.position.z;
     }
 
     private void FixedUpdate()
     {
-        if(startPosZ >= 0)
+        /*if(startPosZ >= 0)
         {
             if (gameObject.transform.position.z <= startPosZ + range)
             {
                 GetComponent<Rigidbody>().velocity = transform.forward * speed * Time.deltaTime;
             }
             else Destroy(this.gameObject);
+        }*/
+        /*calculatePos = gameObject.transform.position.z - startPosZ;
+        Debug.Log(Mathf.Round(calculatePos / 10));
+        if (startPosZ >= 0 && calculatePos >= range)
+        {
+            Destroy(gameObject);
         }
+        else if(startPosZ < 0 && calculatePos <= -range)
+        {
+            Destroy(gameObject);
+        }
+        else GetComponent<Rigidbody>().velocity = transform.forward * speed * Time.deltaTime;*/
+        GetComponent<Rigidbody>().velocity = transform.forward * speed * Time.deltaTime;
+        Destroy(gameObject, 1);
     }
 
-    public void SetParent(Skill1_Character1 p)
+    public void SetParent(SkillsBase p)
     {
         parent = p;
     }

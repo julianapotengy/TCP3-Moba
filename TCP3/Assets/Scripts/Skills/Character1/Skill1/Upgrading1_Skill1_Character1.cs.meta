@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: c5173206267a598459013baeaeff9ac3
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - levelTxt: {instanceID: 0}
+  - cooldownTxt: {instanceID: 0}
+  - projectile: {fileID: 7403000147661867235, guid: 8eaa1aed3e6048b4db799709b24e7e55,
+      type: 3}
+  - shootPivot: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
