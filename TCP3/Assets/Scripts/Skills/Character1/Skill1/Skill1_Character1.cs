@@ -14,34 +14,13 @@ public class Skill1_Character1 : SkillsBase
         skillName = "Skill 1";
         description = "Granada de pulso elétrico. A personagem joga uma granada, que estoura no primeiro alvo que acertar, " +
             "causando dano e aplicando efeito de lentidão no alvo por 2s.";
-        range = 5;
         level = 0;
-        maxLevel = 3;
-        baseCooldown = 7;
-        cooldown = baseCooldown;
-        cooldownCount = cooldown;
-        baseDamage = 30;
-        damage = baseDamage;
-        canUse = true;
-        choosedUpgrading = false;
-
-        levelTxt = GameObject.Find("Skill1TextLevel").GetComponent<Text>();
-        cooldownTxt = GameObject.Find("Skill1TextCD").GetComponent<Text>();
-        shootPivot = GameObject.Find("Character");
+        BasicAwake();
     }
 
     private void Update()
     {
-        cooldownCount += Time.deltaTime;
-        HitTarget();
-        Levels();
-
-        levelTxt.text = "Level: " + level;
-        if(cooldownCount <= cooldown)
-        {
-            cooldownTxt.text = "CD: " + Mathf.Round(cooldownCount) + "s";
-        }
-        else cooldownTxt.text = "CD: " + Mathf.Round(cooldown) + "s";
+        BasicUpdate();
     }
 
     public override void DoIt()
@@ -66,5 +45,36 @@ public class Skill1_Character1 : SkillsBase
             ChangeSpeed(-0.15f, 2, target);
             hitTarget = false;
         }
+    }
+
+    protected void BasicAwake()
+    {
+        range = 5;
+        maxLevel = 3;
+        baseCooldown = 7;
+        cooldown = baseCooldown;
+        cooldownCount = cooldown;
+        baseDamage = 30;
+        damage = baseDamage;
+        canUse = true;
+        choosedUpgrading = false;
+
+        levelTxt = GameObject.Find("Skill1TextLevel").GetComponent<Text>();
+        cooldownTxt = GameObject.Find("Skill1TextCD").GetComponent<Text>();
+        shootPivot = GameObject.Find("Character");
+    }
+
+    protected void BasicUpdate()
+    {
+        cooldownCount += Time.deltaTime;
+        HitTarget();
+        Levels(1);
+
+        levelTxt.text = "Level: " + level;
+        if (cooldownCount <= cooldown)
+        {
+            cooldownTxt.text = "CD: " + Mathf.Round(cooldownCount) + "s";
+        }
+        else cooldownTxt.text = "CD: " + Mathf.Round(cooldown) + "s";
     }
 }

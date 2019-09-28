@@ -9,35 +9,14 @@ public class Upgrading1_Skill1_Character1 : Skill1_Character1
     {
         skillName = "Aprimoramento 1";
         description = "Adiciona um dano por tempo ao alvo acertado pela granada.";
-        range = 5;
         level = 2;
-        maxLevel = 3;
-        baseCooldown = 7;
-        cooldown = baseCooldown;
-        cooldownCount = cooldown;
-        baseDamage = 30;
-        damage = baseDamage;
-        canUse = true;
-        choosedUpgrading = true;
-
-        levelTxt = GameObject.Find("Skill1TextLevel").GetComponent<Text>();
-        cooldownTxt = GameObject.Find("Skill1TextCD").GetComponent<Text>();
-        shootPivot = GameObject.Find("Character");
+        BasicAwake();
         projectile = Resources.Load<GameObject>("Prefabs/Characters/Projectile_Skill1_Character1");
     }
 
     private void Update()
     {
-        cooldownCount += Time.deltaTime;
-        HitTarget();
-        Levels();
-
-        levelTxt.text = "Level: " + level;
-        if (cooldownCount <= cooldown)
-        {
-            cooldownTxt.text = "CD: " + Mathf.Round(cooldownCount) + "s";
-        }
-        else cooldownTxt.text = "CD: " + Mathf.Round(cooldown) + "s";
+        BasicUpdate();
     }
 
     public override void DoIt()

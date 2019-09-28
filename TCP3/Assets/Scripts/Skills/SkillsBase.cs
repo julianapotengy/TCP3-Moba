@@ -40,9 +40,9 @@ public class SkillsBase : MonoBehaviour
 
     }
 
-    protected void Heal()
+    protected void Heal(float h)
     {
-
+        target.GetComponent<PlayableCharacters>().Heal(h);
     }
 
     protected void Shield()
@@ -96,9 +96,9 @@ public class SkillsBase : MonoBehaviour
         }*/
     }
 
-    protected void LifeSteal()
+    protected void LifeSteal(float damage)
     {
-
+        Heal(damage * 0.15f);
     }
 
     protected void CauseDamage()
@@ -154,7 +154,7 @@ public class SkillsBase : MonoBehaviour
         hitTarget = hitted;
     }
 
-    protected void Levels()
+    protected void Levels(int skillNumber)
     {
         if (level == 1)
         {
@@ -166,19 +166,37 @@ public class SkillsBase : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.Alpha1))
                 {
-                    gameObject.AddComponent<Upgrading1_Skill1_Character1>();
+                    if (skillNumber.Equals(1))
+                        gameObject.AddComponent<Upgrading1_Skill1_Character1>();
+                    else if (skillNumber.Equals(2))
+                        gameObject.AddComponent<Upgrading1_Skill2_Character1>();
+                    else if (skillNumber.Equals(3))
+                        gameObject.AddComponent<Upgrading1_Skill3_Character1>();
+
                     choosedUpgrading = true;
                     Destroy(this);
                 }
                 else if (Input.GetKeyDown(KeyCode.Alpha2))
                 {
-                    gameObject.AddComponent<Upgrading2_Skill1_Character1>();
+                    if (skillNumber.Equals(1))
+                        gameObject.AddComponent<Upgrading2_Skill1_Character1>();
+                    else if (skillNumber.Equals(2))
+                        gameObject.AddComponent<Upgrading2_Skill2_Character1>();
+                    else if (skillNumber.Equals(3))
+                        gameObject.AddComponent<Upgrading2_Skill3_Character1>();
+
                     choosedUpgrading = true;
                     Destroy(this);
                 }
                 else if (Input.GetKeyDown(KeyCode.Alpha3))
                 {
-                    gameObject.AddComponent<Upgrading3_Skill1_Character1>();
+                    if (skillNumber.Equals(1))
+                        gameObject.AddComponent<Upgrading3_Skill1_Character1>();
+                    else if (skillNumber.Equals(2))
+                        gameObject.AddComponent<Upgrading3_Skill2_Character1>();
+                    else if (skillNumber.Equals(3))
+                        gameObject.AddComponent<Upgrading3_Skill3_Character1>();
+
                     choosedUpgrading = true;
                     Destroy(this);
                 }

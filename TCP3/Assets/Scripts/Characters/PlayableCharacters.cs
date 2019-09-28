@@ -9,13 +9,30 @@ public class PlayableCharacters : Characters
     protected int level;
     protected Text levelTxt;
     protected Text lifeText;
+    #region Skills
     protected int passiveCharacter;
     protected int passiveClass;
     protected bool canUpSkill;
     protected bool canLevelUp;
     protected int skillsToUp;
     protected int ultToUp;
+    #endregion
+    #region Skills effect
+    protected float temporaryAtkDamage;
+    protected int quantityAtk;
+    protected bool buffingAtkDamage;
+    protected float timeToBuffAtkSpeed;
+    protected float temporaryAtkSpeed;
+    protected bool buffingAtkSpeed;
+    protected float timeBuffingAtkSpeed;
+    protected float temporaryAtkRange;
+    protected bool buffAtkRange;
+    protected float quantitytoBuffRange;
+    protected bool addedAtkRange;
+    protected bool stealLife;
+    protected float quantityToSteal;
     protected bool invisible;
+    #endregion
 
     protected List<SkillsBase> skills = new List<SkillsBase>(3);
 
@@ -52,6 +69,14 @@ public class PlayableCharacters : Characters
         if (atkSpeedCount >= atkSpeed && target != null)
         {
             AutoAttack();
+            if (buffingAtkDamage)
+            {
+                quantityAtk -= 1;
+                if(stealLife)
+                {
+                    StealLife(quantityToSteal);
+                }
+            }
             atkSpeedCount = 0;
         }
     }
@@ -75,6 +100,81 @@ public class PlayableCharacters : Characters
             {
                 targetDestination = hit.point;
                 agent.SetDestination(targetDestination);
+            }
+        }
+    }
+
+    public void BuffAttackDamage(int qAtk, float qBuff, bool buffRange, float qRange, bool stealLife, float qStealLife)
+    {
+        temporaryAtkDamage = atkDamage;
+        atkDamage += atkDamage * qBuff;
+        quantityAtk = qAtk;
+
+        buffAtkRange = buffRange;
+        quantitytoBuffRange = qRange;
+
+        this.stealLife = stealLife;
+        quantityToSteal = qStealLife;
+
+        buffingAtkDamage = true;
+    }
+
+    protected void BuffingAttackDamage()
+    {
+        if(buffingAtkDamage)
+        {
+            if(buffAtkRange && !addedAtkRange)
+            {
+                BuffAtkRange(quantitytoBuffRange);
+            }
+            if(quantityAtk <= 0)
+            {
+                atkDamage = temporaryAtkDamage;
+                if(buffAtkRange)
+                {
+                    atkRange = temporaryAtkRange;
+                    addedAtkRange = false;
+                    buffAtkRange = false;
+                }
+                stealLife = false;
+                buffingAtkDamage = false;
+            }
+        }
+    }
+
+    protected void BuffAtkRange(float q)
+    {
+        temporaryAtkRange = atkRange;
+        atkRange += atkRange * q;
+        addedAtkRange = true;
+    }
+
+    protected void StealLife(float qStealLife)
+    {
+        if (stealLife)
+        {
+            Heal(atkDamage * qStealLife);
+        }
+    }
+
+    public void BuffAttackSpeed(float q, float time)
+    {
+        temporaryAtkSpeed = atkSpeed;
+        atkSpeed += atkSpeed * q;
+        timeToBuffAtkSpeed = time;
+        buffingAtkSpeed = true;
+    }
+
+    protected void BuffingAttackSpeed()
+    {
+        if(buffingAtkSpeed)
+        {
+            timeBuffingAtkSpeed += Time.deltaTime;
+            if(timeBuffingAtkSpeed >= timeToBuffAtkSpeed)
+            {
+                atkSpeed = temporaryAtkSpeed;
+                timeBuffingAtkSpeed = 0;
+                buffingAtkSpeed = false;
             }
         }
     }

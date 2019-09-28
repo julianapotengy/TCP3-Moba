@@ -42,12 +42,14 @@ public class Character1 : PlayableCharacters
         PlayableAutoAttack();
         Movement();
         agent.speed = moveSpeed;
-        TimeBuffingSpeed();
         CheckAtkRange();
         ExperienceSystem();
         CheckLife();
         UpSkills();
         UseSkills();
+        TimeBuffingSpeed();
+        BuffingAttackDamage();
+        BuffingAttackSpeed();
 
         levelTxt.text = "Level: " + level;
         lifeText.text = "Life: " + life + " / " + maxLife;

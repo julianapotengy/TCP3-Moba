@@ -23,7 +23,7 @@ public class Skill3_Character1 : SkillsBase
     private void Update()
     {
         cooldownCount += Time.deltaTime;
-        Levels();
+        Levels(3);
 
         levelTxt.text = "Level: " + level;
         if (cooldownCount <= cooldown)

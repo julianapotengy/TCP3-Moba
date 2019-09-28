@@ -11,6 +11,25 @@ public class Skill2_Character1 : SkillsBase
         description = "Munição especial. A personagem carrega a arma com uma munição especial, " +
             "e nos próximos 3 ataques básicos dá 20% de dano a mais nos alvos.";
         level = 0;
+        BasicAwake();
+    }
+
+    private void Update()
+    {
+        BasicUpdate();
+    }
+
+    public override void DoIt()
+    {
+        if (cooldownCount >= cooldown && level >= 1)
+        {
+            gameObject.GetComponent<PlayableCharacters>().BuffAttackDamage(3, 0.2f, false, 0, false, 0);
+            cooldownCount = 0;
+        }
+    }
+
+    protected void BasicAwake()
+    {
         maxLevel = 3;
         baseCooldown = 14;
         cooldown = baseCooldown;
@@ -20,10 +39,10 @@ public class Skill2_Character1 : SkillsBase
         cooldownTxt = GameObject.Find("Skill2TextCD").GetComponent<Text>();
     }
 
-    private void Update()
+    protected void BasicUpdate()
     {
         cooldownCount += Time.deltaTime;
-        Levels();
+        Levels(2);
 
         levelTxt.text = "Level: " + level;
         if (cooldownCount <= cooldown)
@@ -31,14 +50,5 @@ public class Skill2_Character1 : SkillsBase
             cooldownTxt.text = "CD: " + Mathf.Round(cooldownCount) + "s";
         }
         else cooldownTxt.text = "CD: " + Mathf.Round(cooldown) + "s";
-    }
-
-    public override void DoIt()
-    {
-        if (cooldownCount >= cooldown && level >= 1)
-        {
-            Debug.Log(skillName);
-            cooldownCount = 0;
-        }
     }
 }

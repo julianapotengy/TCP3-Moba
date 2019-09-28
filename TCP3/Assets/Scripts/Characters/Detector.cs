@@ -10,6 +10,11 @@ public class Detector : Characters
         this.transform.localScale = new Vector3(gameObject.transform.parent.GetComponent<BaseScript>().GetAtkRange(), 0.0005f, gameObject.transform.parent.GetComponent<BaseScript>().GetAtkRange());
     }
 
+    private void Update()
+    {
+        this.transform.localScale = new Vector3(gameObject.transform.parent.GetComponent<BaseScript>().GetAtkRange(), 0.0005f, gameObject.transform.parent.GetComponent<BaseScript>().GetAtkRange());
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.GetComponent<BaseScript>() != null && other.gameObject != gameObject.transform.parent.gameObject)
@@ -25,5 +30,4 @@ public class Detector : Characters
             characteresOnArea.Remove(other.gameObject.GetComponent<BaseScript>());
         }
     }
-
 }

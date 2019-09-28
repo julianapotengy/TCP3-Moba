@@ -8,7 +8,7 @@ public class Characters : BaseScript
     protected float moveSpeed;
     protected float temporaryMoveSpeed;
     protected float timeBuffingSpeed;
-    protected float timeToBuff;
+    protected float timeToBuffSpeed;
     protected bool buffingSpeed;
     protected float resistance;
     protected string specialAtk;
@@ -31,7 +31,7 @@ public class Characters : BaseScript
     {
         temporaryMoveSpeed = moveSpeed;
         moveSpeed += moveSpeed * quantity;
-        timeToBuff = time;
+        timeToBuffSpeed = time;
         buffingSpeed = true;
     }
 
@@ -40,7 +40,7 @@ public class Characters : BaseScript
         if(buffingSpeed)
         {
             timeBuffingSpeed += Time.deltaTime;
-            if (timeBuffingSpeed >= timeToBuff)
+            if (timeBuffingSpeed >= timeToBuffSpeed)
             {
                 moveSpeed = temporaryMoveSpeed;
                 timeBuffingSpeed = 0;
@@ -49,9 +49,8 @@ public class Characters : BaseScript
         }
     }
 
-    public void AddMoveSpeed(float quantity)
+    public void AddMoveSpeed(float q)
     {
-        moveSpeed += quantity;
-        temporaryMoveSpeed = moveSpeed;
+        moveSpeed += q;
     }
 }
