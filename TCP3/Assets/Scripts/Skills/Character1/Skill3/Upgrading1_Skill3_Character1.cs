@@ -4,15 +4,9 @@ using UnityEngine;
 
 public class Upgrading1_Skill3_Character1 : Skill3_Character1
 {
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        skillName = "Aprimoramento 1";
+        description = "Ao sair da invisibilidade, a personagem ganha 20% de velocidade de ataque por 4s.";
     }
 }

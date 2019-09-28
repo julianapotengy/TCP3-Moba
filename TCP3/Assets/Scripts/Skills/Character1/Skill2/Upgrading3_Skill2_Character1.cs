@@ -4,15 +4,9 @@ using UnityEngine;
 
 public class Upgrading3_Skill2_Character1 : Skill2_Character1
 {
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        skillName = "Aprimoramento 3";
+        description = "Adiciona 15% de roubo de vida com a munição especial.";
     }
 }

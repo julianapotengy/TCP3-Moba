@@ -38,6 +38,7 @@ public class Skill3_Character1 : SkillsBase
         if (cooldownCount >= cooldown && level >= 1)
         {
             Debug.Log(skillName);
+            Invisibility(20);
             cooldownCount = 0;
         }
     }

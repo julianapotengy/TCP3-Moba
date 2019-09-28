@@ -60,7 +60,7 @@ public class Upgrading2_Skill1_Character1 : Skill1_Character1
         if (hitTarget)
         {
             CauseDamageInTime(2, damage / 5);
-            ChangeSpeed(-10, 2);
+            ChangeSpeed(-0.15f, 2, target);
             hitTarget = false;
         }
     }

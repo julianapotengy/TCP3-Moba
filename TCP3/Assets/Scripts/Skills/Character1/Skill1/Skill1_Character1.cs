@@ -63,7 +63,7 @@ public class Skill1_Character1 : SkillsBase
         if(hitTarget)
         {
             CauseDamage();
-            ChangeSpeed(-10, 2);
+            ChangeSpeed(-0.15f, 2, target);
             hitTarget = false;
         }
     }

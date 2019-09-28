@@ -4,15 +4,9 @@ using UnityEngine;
 
 public class Upgrading2_Skill2_Character1 : Skill2_Character1
 {
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        skillName = "Aprimoramento 2";
+        description = "A munição especial marca o alvo, e fornece visão do alvo por um período de tempo.";
     }
 }

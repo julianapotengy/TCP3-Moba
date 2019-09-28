@@ -152,17 +152,20 @@ public class PlayableCharacters : Characters
     #region Skills
     protected void UseSkills()
     {
-        if(Input.GetKeyDown(InputManager.IM.skill1))
+        if(!Input.GetKey(InputManager.IM.upSkill))
         {
-            skills[0].DoIt();
-        }
-        if (Input.GetKeyDown(InputManager.IM.skill2))
-        {
-            skills[1].DoIt();
-        }
-        if (Input.GetKeyDown(InputManager.IM.skill3))
-        {
-            skills[2].DoIt();
+            if (Input.GetKeyDown(InputManager.IM.skill1))
+            {
+                skills[0].DoIt();
+            }
+            if (Input.GetKeyDown(InputManager.IM.skill2))
+            {
+                skills[1].DoIt();
+            }
+            if (Input.GetKeyDown(InputManager.IM.skill3))
+            {
+                skills[2].DoIt();
+            }
         }
     }
 
@@ -190,6 +193,17 @@ public class PlayableCharacters : Characters
         else if(skillsToUp <= 0)
         {
             canUpSkill = false;
+        }
+    }
+
+    protected void Invisible(float time)
+    {
+        if (invisible)
+        {
+            /*if ()
+            {
+
+            }*/
         }
     }
     #endregion

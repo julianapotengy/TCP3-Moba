@@ -41,6 +41,8 @@ public class Character1 : PlayableCharacters
     {
         PlayableAutoAttack();
         Movement();
+        agent.speed = moveSpeed;
+        TimeBuffingSpeed();
         CheckAtkRange();
         ExperienceSystem();
         CheckLife();

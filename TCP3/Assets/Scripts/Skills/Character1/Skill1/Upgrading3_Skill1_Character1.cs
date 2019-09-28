@@ -50,6 +50,7 @@ public class Upgrading3_Skill1_Character1 : Skill1_Character1
             fire.GetComponent<Projectile_Skill1_Character1>().SetDamage(damage);
             fire.GetComponent<Projectile_Skill1_Character1>().SetRange(range);
 
+            ChangeSpeed(0.15f, 2, gameObject.transform);
             cooldownCount = 0;
         }
     }
@@ -59,9 +60,8 @@ public class Upgrading3_Skill1_Character1 : Skill1_Character1
         if (hitTarget)
         {
             Debug.Log(target.name);
-            Dash(2, 5, gameObject.GetComponent<Rigidbody>());
             CauseDamage();
-            ChangeSpeed(-10, 2);
+            ChangeSpeed(-0.15f, 2, target);
             hitTarget = false;
         }
     }

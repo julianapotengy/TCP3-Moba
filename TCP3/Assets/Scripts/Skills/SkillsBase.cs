@@ -35,7 +35,7 @@ public class SkillsBase : MonoBehaviour
     protected PlayableCharacters parent;
 
     #region O que faz
-    protected void Invisibility()
+    protected void Invisibility(float time)
     {
 
     }
@@ -70,14 +70,14 @@ public class SkillsBase : MonoBehaviour
 
     }
 
-    protected void ChangeSpeed(float quantity, float time)
+    protected void ChangeSpeed(float quantity, float time, Transform t)
     {
-        target.GetComponent<Characters>().BuffMoveSpeed(quantity, time);
+        t.GetComponent<Characters>().BuffMoveSpeed(quantity, time);
     }
 
     protected void Dash(int direction, float dashDistance, Rigidbody rb)
     {
-        if (direction == 0)
+        /*if (direction == 0)
         {
             gameObject.transform.position = gameObject.transform.position;
         }
@@ -93,7 +93,7 @@ public class SkillsBase : MonoBehaviour
         else if (direction == 3)
         {
             gameObject.transform.position = gameObject.transform.position;
-        }
+        }*/
     }
 
     protected void LifeSteal()
