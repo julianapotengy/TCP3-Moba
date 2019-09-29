@@ -23,6 +23,8 @@ public class Skill2_Character1 : SkillsBase
     {
         if (cooldownCount >= cooldown && level >= 1)
         {
+            gameObject.GetComponent<PlayableCharacters>().SetUsedSkill(true);
+            gameObject.GetComponent<PlayableCharacters>().SetUsedSkill(true);
             gameObject.GetComponent<PlayableCharacters>().BuffAttackDamage(3, 0.2f, false, 0, false, 0);
             cooldownCount = 0;
         }

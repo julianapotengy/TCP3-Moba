@@ -91,6 +91,7 @@ public class BaseScript : MonoBehaviour
         GameObject fire = Instantiate<GameObject>(firePivot, shootPivot.transform.position, Quaternion.identity);// PhotonNetwork.InstantiateSceneObject("tower_red_fire", firePivot.transform.position, Quaternion.identity,0,new object[0]); // instanciar no photon ou no tipo que for usar
         fire.GetComponent<Projectile>().SetDamage(atkDamage);
         fire.GetComponent<Projectile>().SetTarget(GetTarget());
+
     }
     #endregion
 

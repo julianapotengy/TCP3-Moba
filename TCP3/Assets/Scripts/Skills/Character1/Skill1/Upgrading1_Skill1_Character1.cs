@@ -23,6 +23,7 @@ public class Upgrading1_Skill1_Character1 : Skill1_Character1
     {
         if (cooldownCount >= cooldown && level >= 1)
         {
+            gameObject.GetComponent<PlayableCharacters>().SetUsedSkill(true);
             GameObject fire = Instantiate<GameObject>(projectile, shootPivot.transform.position, Quaternion.identity);// PhotonNetwork.InstantiateSceneObject("tower_red_fire", firePivot.transform.position, Quaternion.identity,0,new object[0]); // instanciar no photon ou no tipo que for usar
             fire.transform.rotation = shootPivot.transform.rotation;
             fire.GetComponent<Projectile_Skill1_Character1>().SetParent(this);

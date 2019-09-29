@@ -16,15 +16,14 @@ public class PlayableCharacters : Characters
     protected bool canLevelUp;
     protected int skillsToUp;
     protected int ultToUp;
+    protected bool usedSkill;
+    protected bool usedAutoAtk;
     #endregion
     #region Skills effect
     protected float temporaryAtkDamage;
     protected int quantityAtk;
     protected bool buffingAtkDamage;
     protected float timeToBuffAtkSpeed;
-    protected float temporaryAtkSpeed;
-    protected bool buffingAtkSpeed;
-    protected float timeBuffingAtkSpeed;
     protected float temporaryAtkRange;
     protected bool buffAtkRange;
     protected float quantitytoBuffRange;
@@ -32,6 +31,14 @@ public class PlayableCharacters : Characters
     protected bool stealLife;
     protected float quantityToSteal;
     protected bool invisible;
+    protected float timeInvisible;
+    protected Color color;
+    protected float temporaryAtkSpeed;
+    protected bool buffingAtkSpeed;
+    protected float timeBuffingAtkSpeed;
+    protected bool buffAtkSpeed;
+    protected float qAtkSpeed;
+    protected float timeAtkSpeed;
     #endregion
 
     protected List<SkillsBase> skills = new List<SkillsBase>(3);
@@ -68,6 +75,7 @@ public class PlayableCharacters : Characters
         atkSpeedCount += Time.deltaTime;
         if (atkSpeedCount >= atkSpeed && target != null)
         {
+            usedAutoAtk = true;
             AutoAttack();
             if (buffingAtkDamage)
             {
@@ -104,6 +112,7 @@ public class PlayableCharacters : Characters
         }
     }
 
+    #region Skills effect
     public void BuffAttackDamage(int qAtk, float qBuff, bool buffRange, float qRange, bool stealLife, float qStealLife)
     {
         temporaryAtkDamage = atkDamage;
@@ -174,10 +183,44 @@ public class PlayableCharacters : Characters
             {
                 atkSpeed = temporaryAtkSpeed;
                 timeBuffingAtkSpeed = 0;
+                buffAtkSpeed = false;
                 buffingAtkSpeed = false;
             }
         }
     }
+
+    public void BecomeInvisible(float time)
+    {
+        invisible = true;
+        timeInvisible = time;
+        this.buffAtkSpeed = buffAtkSpeed;
+        this.qAtkSpeed = qAtkSpeed;
+        this.timeAtkSpeed = timeAtkSpeed;
+    }
+    
+    protected void Invisibility()
+    {
+        if (invisible)
+        {
+            timeInvisible -= Time.deltaTime;
+            color.a = 0.5f;
+            GetComponent<MeshRenderer>().material.color = color;
+
+            if (timeInvisible <= 0 || usedSkill || usedAutoAtk)
+            {
+                timeInvisible = 0;
+                usedSkill = false;
+                usedAutoAtk = false;
+                invisible = false;
+            }
+        }
+        else
+        {
+            color.a = 1;
+            GetComponent<MeshRenderer>().material.color = color;
+        }
+    }
+    #endregion
 
     #region Experience
     protected void GainExperienceInLane(float quantity)
@@ -305,6 +348,11 @@ public class PlayableCharacters : Characters
 
             }*/
         }
+    }
+
+    public void SetUsedSkill(bool b)
+    {
+        usedSkill = b;
     }
     #endregion
 }

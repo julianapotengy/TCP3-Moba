@@ -22,6 +22,7 @@ public class Upgrading3_Skill2_Character1 : Skill2_Character1
     {
         if (cooldownCount >= cooldown && level >= 1)
         {
+            gameObject.GetComponent<PlayableCharacters>().SetUsedSkill(true);
             gameObject.GetComponent<PlayableCharacters>().BuffAttackDamage(3, 0.2f, false, 0, true, 0.15f);
             cooldownCount = 0;
         }

@@ -35,9 +35,9 @@ public class SkillsBase : MonoBehaviour
     protected PlayableCharacters parent;
 
     #region O que faz
-    protected void Invisibility(float time)
+    protected void Invisibility(float timeInvisible, bool buffAtkSpeed, float qAtkSpeed, float timeAtkSpeed)
     {
-
+        gameObject.GetComponent<PlayableCharacters>().BecomeInvisible(timeInvisible);
     }
 
     protected void Heal(float h)

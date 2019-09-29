@@ -30,6 +30,7 @@ public class Character1 : PlayableCharacters
         level = 1;
         canLevelUp = true;
         canUpSkill = true;
+        color = GetComponent<MeshRenderer>().material.color;
     }
 
     private void Start()
@@ -44,15 +45,17 @@ public class Character1 : PlayableCharacters
         agent.speed = moveSpeed;
         CheckAtkRange();
         ExperienceSystem();
+        Heal(1 * Time.deltaTime);
         CheckLife();
         UpSkills();
         UseSkills();
         TimeBuffingSpeed();
         BuffingAttackDamage();
         BuffingAttackSpeed();
+        Invisibility();
 
         levelTxt.text = "Level: " + level;
-        lifeText.text = "Life: " + life + " / " + maxLife;
+        lifeText.text = "Life: " + Mathf.Round(life / 1) + " / " + maxLife;
         
         #region Apresentacao
         XPAPRESENTACAO();
