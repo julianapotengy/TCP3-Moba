@@ -11,7 +11,7 @@ public class Skill1_Character1 : SkillsBase
 
     private void Awake()
     {
-        skillName = "Skill 1";
+        skillName = "Habilidade 1";
         description = "Granada de pulso elétrico. A personagem joga uma granada, que estoura no primeiro alvo que acertar, " +
             "causando dano e aplicando efeito de lentidão no alvo por 2s.";
         level = 0;
@@ -71,11 +71,11 @@ public class Skill1_Character1 : SkillsBase
         HitTarget();
         Levels(1);
 
-        levelTxt.text = "Level: " + level;
+        levelTxt.text = "Nível: " + level;
         if (cooldownCount <= cooldown)
         {
-            cooldownTxt.text = "CD: " + Mathf.Round(cooldownCount) + "s";
+            cooldownTxt.text = "TR: " + Mathf.Round(cooldownCount) + "s";
         }
-        else cooldownTxt.text = "CD: " + Mathf.Round(cooldown) + "s";
+        else cooldownTxt.text = "TR: " + Mathf.Round(cooldown) + "s";
     }
 }

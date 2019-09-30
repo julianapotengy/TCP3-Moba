@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 4273839176532372969}
   - component: {fileID: 4273839176532372970}
   m_Layer: 2
-  m_Name: Detector
+  m_Name: Detector_Character 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -169,7 +169,7 @@ GameObject:
   - component: {fileID: 4273839176907008483}
   - component: {fileID: 4273839176907008484}
   m_Layer: 0
-  m_Name: Character
+  m_Name: Character1
   m_TagString: BlueTeam
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

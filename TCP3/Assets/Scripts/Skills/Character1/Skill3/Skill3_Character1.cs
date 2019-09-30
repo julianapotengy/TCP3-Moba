@@ -44,11 +44,11 @@ public class Skill3_Character1 : SkillsBase
         cooldownCount += Time.deltaTime;
         Levels(3);
 
-        levelTxt.text = "Level: " + level;
+        levelTxt.text = "Nível: " + level;
         if (cooldownCount <= cooldown)
         {
-            cooldownTxt.text = "CD: " + Mathf.Round(cooldownCount) + "s";
+            cooldownTxt.text = "TR: " + Mathf.Round(cooldownCount) + "s";
         }
-        else cooldownTxt.text = "CD: " + Mathf.Round(cooldown) + "s";
+        else cooldownTxt.text = "TR: " + Mathf.Round(cooldown) + "s";
     }
 }

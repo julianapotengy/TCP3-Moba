@@ -9,6 +9,9 @@ public class PlayableCharacters : Characters
     protected int level;
     protected Text levelTxt;
     protected Text lifeText;
+    protected Text atkDamageText;
+    protected Text atkSpeedText;
+    protected Text moveSpeedText;
     #region Skills
     protected int passiveCharacter;
     protected int passiveClass;
@@ -145,6 +148,7 @@ public class PlayableCharacters : Characters
                     addedAtkRange = false;
                     buffAtkRange = false;
                 }
+
                 stealLife = false;
                 buffingAtkDamage = false;
             }
@@ -193,9 +197,9 @@ public class PlayableCharacters : Characters
     {
         invisible = true;
         timeInvisible = time;
-        this.buffAtkSpeed = buffAtkSpeed;
+        /*this.buffAtkSpeed = buffAtkSpeed;
         this.qAtkSpeed = qAtkSpeed;
-        this.timeAtkSpeed = timeAtkSpeed;
+        this.timeAtkSpeed = timeAtkSpeed;*/
     }
     
     protected void Invisibility()

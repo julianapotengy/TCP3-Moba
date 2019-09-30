@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Character1 : PlayableCharacters
 {
@@ -27,6 +28,9 @@ public class Character1 : PlayableCharacters
 
         levelTxt = GameObject.Find("LevelText").GetComponent<Text>();
         lifeText = GameObject.Find("LifeText").GetComponent<Text>();
+        atkDamageText = GameObject.Find("AtkDamageText").GetComponent<Text>();
+        atkSpeedText = GameObject.Find("AtkSpeedText").GetComponent<Text>();
+        moveSpeedText = GameObject.Find("MoveSpeedText").GetComponent<Text>();
         level = 1;
         canLevelUp = true;
         canUpSkill = true;
@@ -54,12 +58,19 @@ public class Character1 : PlayableCharacters
         BuffingAttackSpeed();
         Invisibility();
 
-        levelTxt.text = "Level: " + level;
-        lifeText.text = "Life: " + Mathf.Round(life / 1) + " / " + maxLife;
-        
+        levelTxt.text = "Nível: " + level;
+        lifeText.text = "Vida: " + Mathf.Round(life / 1) + " / " + maxLife;
+        atkDamageText.text = "Dano: " + atkDamage;
+        atkSpeedText.text = "Velocidade de ataque: " + atkSpeed;
+        moveSpeedText.text = "Velocidade de movimento: " + moveSpeed;
+
         #region Apresentacao
         XPAPRESENTACAO();
         Debug.Log("experience: " + experience + " level: " + level);
+        if(Input.GetKeyDown(KeyCode.T))
+        {
+            SceneManager.LoadScene(0);
+        }
         #endregion
 
         if (skills[0] == null)
