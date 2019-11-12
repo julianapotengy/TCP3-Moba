@@ -7,8 +7,9 @@ public class Upgrading3_Skill2_Character1 : Skill2_Character1
 {
     private void Awake()
     {
-        skillName = "Aprimoramento 3";
-        description = "Adiciona 15% de roubo de vida com a munição especial.";
+        skillName = "Controlador";
+        description = "Revela uma área em volta daqueles atingidos pelos tiros por breves momentos. " +
+            "Atirar novamente tem o mesmo efeito.";
         level = 2;
         BasicAwake();
     }
@@ -17,13 +18,14 @@ public class Upgrading3_Skill2_Character1 : Skill2_Character1
     {
         BasicUpdate();
     }
-
+    // SERVIDOR
     public override void DoIt()
     {
         if (cooldownCount >= cooldown && level >= 1)
         {
             gameObject.GetComponent<PlayableCharacters>().SetUsedSkill(true);
-            gameObject.GetComponent<PlayableCharacters>().BuffAttackDamage(3, 0.2f, false, 0, true, 0.15f);
+            target.GetComponent<Characters>().SetInControlGroup(true);
+            gameObject.GetComponent<PlayableCharacters>().BuffAttackDamage(3, 0.2f);
             cooldownCount = 0;
         }
     }

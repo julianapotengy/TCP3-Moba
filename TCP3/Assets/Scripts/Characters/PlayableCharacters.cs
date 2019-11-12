@@ -24,7 +24,7 @@ public class PlayableCharacters : Characters
     #endregion
     #region Skills effect
     protected float temporaryAtkDamage;
-    protected int quantityAtk;
+   [SerializeField] protected int quantityAtk;
     protected bool buffingAtkDamage;
     protected float timeToBuffAtkSpeed;
     protected float temporaryAtkRange;
@@ -32,6 +32,7 @@ public class PlayableCharacters : Characters
     protected float quantitytoBuffRange;
     protected bool addedAtkRange;
     protected bool stealLife;
+    protected bool doubleDamage;
     protected float quantityToSteal;
     protected bool invisible;
     protected float timeInvisible;
@@ -39,7 +40,6 @@ public class PlayableCharacters : Characters
     protected float temporaryAtkSpeed;
     protected bool buffingAtkSpeed;
     protected float timeBuffingAtkSpeed;
-    protected bool buffAtkSpeed;
     protected float qAtkSpeed;
     protected float timeAtkSpeed;
     #endregion
@@ -57,7 +57,7 @@ public class PlayableCharacters : Characters
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.transform.tag == "RedTeam")
+                if (hit.transform.tag == "RedTeam" || hit.transform.tag == "NormalType")
                 {
                     for (int i = 0; i < detector.GetCharactersOnArea().Count; i++)
                     {
@@ -82,13 +82,25 @@ public class PlayableCharacters : Characters
             AutoAttack();
             if (buffingAtkDamage)
             {
-                quantityAtk -= 1;
-                if(stealLife)
+                if (quantityAtk == 1)
                 {
-                    StealLife(quantityToSteal);
+                    if (stealLife)
+                    {
+                        StealLife(quantityToSteal);
+                        Debug.Log("Habilidade 2 Roubar Vida");
+                        stealLife = false;
+                    }
+                    if(doubleDamage)
+                    {
+                        Debug.Log("Habilidade 2 Dano em dobro");
+                        doubleDamage = false;
+                    }
                 }
+                quantityAtk -= 1;
             }
             atkSpeedCount = 0;
+            if(quantityAtk == 1 && doubleDamage)
+                CauseDoubleDamage();
         }
     }
 
@@ -116,40 +128,28 @@ public class PlayableCharacters : Characters
     }
 
     #region Skills effect
-    public void BuffAttackDamage(int qAtk, float qBuff, bool buffRange, float qRange, bool stealLife, float qStealLife)
+    public void BuffAttackDamage(int qAtk, float qBuff)
     {
-        temporaryAtkDamage = atkDamage;
-        atkDamage += atkDamage * qBuff;
-        quantityAtk = qAtk;
+        if(!buffingAtkDamage)
+        {
+            temporaryAtkDamage = atkDamage;
+            atkDamage += atkDamage * qBuff;
+            quantityAtk = qAtk;
 
-        buffAtkRange = buffRange;
-        quantitytoBuffRange = qRange;
-
-        this.stealLife = stealLife;
-        quantityToSteal = qStealLife;
-
-        buffingAtkDamage = true;
+            buffingAtkDamage = true;
+        }
     }
 
     protected void BuffingAttackDamage()
     {
         if(buffingAtkDamage)
         {
-            if(buffAtkRange && !addedAtkRange)
-            {
-                BuffAtkRange(quantitytoBuffRange);
-            }
             if(quantityAtk <= 0)
             {
                 atkDamage = temporaryAtkDamage;
-                if(buffAtkRange)
-                {
-                    atkRange = temporaryAtkRange;
-                    addedAtkRange = false;
-                    buffAtkRange = false;
-                }
 
                 stealLife = false;
+                doubleDamage = false;
                 buffingAtkDamage = false;
             }
         }
@@ -162,12 +162,24 @@ public class PlayableCharacters : Characters
         addedAtkRange = true;
     }
 
+    public void BoolStealLife(bool stealLife)
+    {
+        this.stealLife = stealLife;
+    }
+
     protected void StealLife(float qStealLife)
     {
-        if (stealLife)
-        {
-            Heal(atkDamage * qStealLife);
-        }
+        Heal(atkDamage * qStealLife);
+    }
+
+    public void BoolDoubleDamage(bool doubleDamage)
+    {
+        this.doubleDamage = doubleDamage;
+    }
+
+    protected void CauseDoubleDamage()
+    {
+        atkDamage = atkDamage * 2;
     }
 
     public void BuffAttackSpeed(float q, float time)
@@ -187,7 +199,6 @@ public class PlayableCharacters : Characters
             {
                 atkSpeed = temporaryAtkSpeed;
                 timeBuffingAtkSpeed = 0;
-                buffAtkSpeed = false;
                 buffingAtkSpeed = false;
             }
         }
@@ -213,6 +224,12 @@ public class PlayableCharacters : Characters
             if (timeInvisible <= 0 || usedSkill || usedAutoAtk)
             {
                 timeInvisible = 0;
+
+                if(skills[2] == GetComponent<Upgrading2_Skill3_Character1>())
+                {
+                    
+                }
+
                 usedSkill = false;
                 usedAutoAtk = false;
                 invisible = false;
@@ -303,7 +320,7 @@ public class PlayableCharacters : Characters
         {
             if (Input.GetKeyDown(InputManager.IM.skill1))
             {
-                skills[0].DoIt();
+                skills[0].DoIt1(false);
             }
             if (Input.GetKeyDown(InputManager.IM.skill2))
             {
@@ -343,15 +360,9 @@ public class PlayableCharacters : Characters
         }
     }
 
-    protected void Invisible(float time)
+    public List<SkillsBase> GetSkills()
     {
-        if (invisible)
-        {
-            /*if ()
-            {
-
-            }*/
-        }
+        return skills;
     }
 
     public void SetUsedSkill(bool b)

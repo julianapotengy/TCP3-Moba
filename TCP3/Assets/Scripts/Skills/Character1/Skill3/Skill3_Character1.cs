@@ -23,7 +23,7 @@ public class Skill3_Character1 : SkillsBase
     {
         if (cooldownCount >= cooldown && level >= 1)
         {
-            Invisibility(20, false, 0, 0);
+            Invisibility(20);
             cooldownCount = 0;
         }
     }

@@ -19,6 +19,8 @@ public class BaseScript : MonoBehaviour
     public GameObject firePivot;
     //public ParticleSystem ShootPivot; // usar depois
     public GameObject shootPivot;
+    protected bool hasShield;
+    protected GameObject shieldObj;
 
     #region Life
     public float GetLife()
@@ -28,7 +30,11 @@ public class BaseScript : MonoBehaviour
 
     public void ReceiveDamage(float damage)
     {
-        life -= damage;
+        if(hasShield)
+        {
+            shieldObj.GetComponent<Shield>().SetDamageTaken(damage);
+        }
+        else life -= damage;
     }
 
     public void Heal(float cure)
@@ -62,6 +68,16 @@ public class BaseScript : MonoBehaviour
         }
         else dead = false;
     }
+
+    public bool GetHasShield()
+    {
+        return hasShield;
+    }
+
+    public void SetShieldObj(GameObject s)
+    {
+        shieldObj = s;
+    }
     #endregion
 
     #region Basic Attack
@@ -89,9 +105,12 @@ public class BaseScript : MonoBehaviour
     {
         //shootPivot.play(); // usar quando tiver particulas
         GameObject fire = Instantiate<GameObject>(firePivot, shootPivot.transform.position, Quaternion.identity);// PhotonNetwork.InstantiateSceneObject("tower_red_fire", firePivot.transform.position, Quaternion.identity,0,new object[0]); // instanciar no photon ou no tipo que for usar
+        if (target.GetComponent<Characters>().GetInControlGroup())
+        {
+            atkDamage = atkDamage * 0.1f;
+        }
         fire.GetComponent<Projectile>().SetDamage(atkDamage);
         fire.GetComponent<Projectile>().SetTarget(GetTarget());
-
     }
     #endregion
 

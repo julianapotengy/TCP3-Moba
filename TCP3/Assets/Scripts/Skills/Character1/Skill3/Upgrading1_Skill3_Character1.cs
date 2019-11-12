@@ -6,8 +6,9 @@ public class Upgrading1_Skill3_Character1 : Skill3_Character1
 {
     private void Awake()
     {
-        skillName = "Aprimoramento 1";
-        description = "Ao sair da invisibilidade, a personagem ganha 20% de velocidade de ataque por 4s.";
+        skillName = "Combatente";
+        description = "Ganha um escudo que absorve dano até ser destruído. " +
+            "Caso receba dano e o escudo ainda esteja invisível, não perderá a invisibilidade.";
         level = 2;
         BasicAwake();
     }
@@ -21,7 +22,7 @@ public class Upgrading1_Skill3_Character1 : Skill3_Character1
     {
         if (cooldownCount >= cooldown && level >= 1)
         {
-            Invisibility(20, true, 0.2f, 4);
+            Invisibility(20);
             cooldownCount = 0;
         }
     }

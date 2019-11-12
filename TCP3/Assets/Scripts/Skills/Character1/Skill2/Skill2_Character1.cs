@@ -25,7 +25,7 @@ public class Skill2_Character1 : SkillsBase
         {
             gameObject.GetComponent<PlayableCharacters>().SetUsedSkill(true);
             gameObject.GetComponent<PlayableCharacters>().SetUsedSkill(true);
-            gameObject.GetComponent<PlayableCharacters>().BuffAttackDamage(3, 0.2f, false, 0, false, 0);
+            gameObject.GetComponent<PlayableCharacters>().BuffAttackDamage(3, 0.2f);
             cooldownCount = 0;
         }
     }

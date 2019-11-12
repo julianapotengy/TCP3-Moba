@@ -57,6 +57,11 @@ public class Character1 : PlayableCharacters
         BuffingAttackDamage();
         BuffingAttackSpeed();
         Invisibility();
+        if (shieldObj != null)
+        {
+            hasShield = true;
+        }
+        else hasShield = false;
 
         levelTxt.text = "Nível: " + level;
         lifeText.text = "Vida: " + Mathf.Round(life / 1) + " / " + maxLife;

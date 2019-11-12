@@ -13,6 +13,7 @@ public class Characters : BaseScript
     protected float resistance;
     protected string specialAtk;
     protected string movement;
+    protected bool inControlGroup;
     
     protected List<BaseScript> characteresOnArea = new List<BaseScript>();
     protected Detector detector;
@@ -52,5 +53,16 @@ public class Characters : BaseScript
     public void AddMoveSpeed(float q)
     {
         moveSpeed += q;
+        temporaryMoveSpeed += q;
+    }
+
+    public void SetInControlGroup(bool cg)
+    {
+        inControlGroup = cg;
+    }
+
+    public bool GetInControlGroup()
+    {
+        return inControlGroup;
     }
 }

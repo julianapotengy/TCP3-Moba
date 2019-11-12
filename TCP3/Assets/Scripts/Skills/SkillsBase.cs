@@ -33,9 +33,11 @@ public class SkillsBase : MonoBehaviour
     protected bool choosedUpgrading;
     protected SkillsBase upgradingChoosen;
     protected PlayableCharacters parent;
+    protected GameObject shieldPrefab;
+    protected GameObject shield;
 
     #region O que faz
-    protected void Invisibility(float timeInvisible, bool buffAtkSpeed, float qAtkSpeed, float timeAtkSpeed)
+    protected void Invisibility(float timeInvisible)
     {
         gameObject.GetComponent<PlayableCharacters>().BecomeInvisible(timeInvisible);
     }
@@ -45,9 +47,13 @@ public class SkillsBase : MonoBehaviour
         target.GetComponent<PlayableCharacters>().Heal(h);
     }
 
-    protected void Shield()
+    protected void Shield(GameObject owner, float damage)
     {
-
+        shieldPrefab = Resources.Load<GameObject>("Prefabs/Shield");
+        shield = (GameObject)Instantiate(shieldPrefab, owner.transform.position, Quaternion.identity);
+        Shield shieldScript = shield.GetComponent<Shield>();
+        shieldScript.SetOwner(owner);
+        shieldScript.SetDamageToTake(damage);
     }
 
     protected void Stun()
@@ -73,6 +79,11 @@ public class SkillsBase : MonoBehaviour
     protected void ChangeSpeed(float quantity, float time, Transform t)
     {
         t.GetComponent<Characters>().BuffMoveSpeed(quantity, time);
+    }
+
+    protected void ChangeAtkSpeed(float quantity, float time, Transform t)
+    {
+        t.GetComponent<PlayableCharacters>().BuffAttackSpeed(quantity, time);
     }
 
     protected void Dash(int direction, float dashDistance, Rigidbody rb)
@@ -209,6 +220,11 @@ public class SkillsBase : MonoBehaviour
     }
 
     public virtual void DoIt()
+    {
+
+    }
+
+    public virtual void DoIt1(bool skill3)
     {
 
     }

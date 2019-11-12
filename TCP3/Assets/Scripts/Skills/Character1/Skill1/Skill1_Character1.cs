@@ -12,8 +12,8 @@ public class Skill1_Character1 : SkillsBase
     private void Awake()
     {
         skillName = "Habilidade 1";
-        description = "Granada de pulso elétrico. A personagem joga uma granada, que estoura no primeiro alvo que acertar, " +
-            "causando dano e aplicando efeito de lentidão no alvo por 2s.";
+        description = "Granada de pulso elétrico. A personagem joga uma granada, " +
+            "que estoura no primeiro alvo que acertar, dando dano e aplicando efeito de lentidão no alvo por 2s.";
         level = 0;
         BasicAwake();
     }
@@ -23,25 +23,34 @@ public class Skill1_Character1 : SkillsBase
         BasicUpdate();
     }
 
-    public override void DoIt()
+    public override void DoIt1(bool skill3)
     {
         if (cooldownCount >= cooldown && level >= 1)
         {
-            gameObject.GetComponent<PlayableCharacters>().SetUsedSkill(true);
             GameObject fire = Instantiate<GameObject>(projectile, shootPivot.transform.position, Quaternion.identity);// PhotonNetwork.InstantiateSceneObject("tower_red_fire", firePivot.transform.position, Quaternion.identity,0,new object[0]); // instanciar no photon ou no tipo que for usar
             fire.transform.rotation = shootPivot.transform.rotation;
             fire.GetComponent<Projectile_Skill1_Character1>().SetParent(gameObject.GetComponent<Skill1_Character1>());
             fire.GetComponent<Projectile_Skill1_Character1>().SetDamage(damage);
             fire.GetComponent<Projectile_Skill1_Character1>().SetRange(range);
 
-            cooldownCount = 0;
+            if (!skill3)
+            {
+                gameObject.GetComponent<PlayableCharacters>().SetUsedSkill(true);
+                cooldownCount = 0;
+            }
+            else
+            {
+                skill3 = false;
+            }
         }
     }
 
-    private void HitTarget()
+    protected virtual void HitTarget()
     {
         if(hitTarget)
         {
+            Debug.Log(target.name);
+            target.GetComponent<Characters>().SetInControlGroup(true);
             CauseDamage();
             ChangeSpeed(-0.15f, 2, target);
             hitTarget = false;
