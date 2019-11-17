@@ -17,15 +17,15 @@ public class Upgrading2_Skill2_Character1 : Skill2_Character1
     {
         BasicUpdate();
     }
-    // FAZER
+    
     public override void DoIt()
     {
-        if (cooldownCount >= cooldown && level >= 1)
+        if (cooldownCount <= 0 && level >= 1)
         {
             gameObject.GetComponent<PlayableCharacters>().SetUsedSkill(true);
             gameObject.GetComponent<PlayableCharacters>().BuffAttackDamage(3, 0.2f);
             gameObject.GetComponent<PlayableCharacters>().BoolDoubleDamage(true);
-            cooldownCount = 0;
+            cooldownCount = cooldown;
         }
     }
 }

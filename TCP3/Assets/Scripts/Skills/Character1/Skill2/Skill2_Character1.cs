@@ -7,7 +7,7 @@ public class Skill2_Character1 : SkillsBase
 {
     private void Awake()
     {
-        skillName = "Habilidade 2";
+        skillName = "Munição Especial";
         description = "Munição especial. A personagem carrega a arma com uma munição especial, " +
             "e nos próximos 3 ataques básicos dá 20% de dano a mais nos alvos.";
         level = 0;
@@ -21,12 +21,12 @@ public class Skill2_Character1 : SkillsBase
 
     public override void DoIt()
     {
-        if (cooldownCount >= cooldown && level >= 1)
+        if (cooldownCount <= 0 && level >= 1)
         {
             gameObject.GetComponent<PlayableCharacters>().SetUsedSkill(true);
             gameObject.GetComponent<PlayableCharacters>().SetUsedSkill(true);
             gameObject.GetComponent<PlayableCharacters>().BuffAttackDamage(3, 0.2f);
-            cooldownCount = 0;
+            cooldownCount = cooldown;
         }
     }
 
@@ -35,7 +35,7 @@ public class Skill2_Character1 : SkillsBase
         maxLevel = 3;
         baseCooldown = 14;
         cooldown = baseCooldown;
-        cooldownCount = cooldown;
+        cooldownCount = 0;
 
         levelTxt = GameObject.Find("Skill2TextLevel").GetComponent<Text>();
         cooldownTxt = GameObject.Find("Skill2TextCD").GetComponent<Text>();
@@ -43,14 +43,13 @@ public class Skill2_Character1 : SkillsBase
 
     protected void BasicUpdate()
     {
-        cooldownCount += Time.deltaTime;
+        cooldownCount -= Time.deltaTime;
         Levels(2);
 
-        levelTxt.text = "Nível: " + level;
-        if (cooldownCount <= cooldown)
+        if (cooldownCount <= 0)
         {
-            cooldownTxt.text = "TR: " + Mathf.Round(cooldownCount) + "s";
+            cooldownTxt.text = "TR: " + Mathf.Round(cooldown) + "s";
         }
-        else cooldownTxt.text = "TR: " + Mathf.Round(cooldown) + "s";
+        else cooldownTxt.text = "TR: " + Mathf.Round(cooldownCount) + "s";
     }
 }

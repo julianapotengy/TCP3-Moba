@@ -17,15 +17,15 @@ public class Upgrading1_Skill2_Character1 : Skill2_Character1
     {
         BasicUpdate();
     }
-    // AJUSTAR PARA SER APENAS NO ULTIMO
+
     public override void DoIt()
     {
-        if (cooldownCount >= cooldown && level >= 1)
+        if (cooldownCount <= 0 && level >= 1)
         {
             gameObject.GetComponent<PlayableCharacters>().SetUsedSkill(true);
             gameObject.GetComponent<PlayableCharacters>().BuffAttackDamage(3, 0.2f);
             gameObject.GetComponent<PlayableCharacters>().BoolStealLife(true);
-            cooldownCount = 0;
+            cooldownCount = cooldown;
         }
     }
 }

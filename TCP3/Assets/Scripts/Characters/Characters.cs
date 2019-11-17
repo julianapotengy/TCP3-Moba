@@ -41,10 +41,18 @@ public class Characters : BaseScript
         if(buffingSpeed)
         {
             timeBuffingSpeed += Time.deltaTime;
+            if (inControlGroup)
+            {
+                inControlGroup = true;
+            }
             if (timeBuffingSpeed >= timeToBuffSpeed)
             {
                 moveSpeed = temporaryMoveSpeed;
                 timeBuffingSpeed = 0;
+                if (inControlGroup)
+                {
+                    inControlGroup = false;
+                }
                 buffingSpeed = false;
             }
         }

@@ -21,7 +21,7 @@ public class Upgrading1_Skill1_Character1 : Skill1_Character1
     
     public override void DoIt1(bool skill3)
     {
-        if (cooldownCount >= cooldown && level >= 1)
+        if (cooldownCount <= 0 && level >= 1)
         {
             GameObject fire = Instantiate<GameObject>(projectile, shootPivot.transform.position, Quaternion.identity);// PhotonNetwork.InstantiateSceneObject("tower_red_fire", firePivot.transform.position, Quaternion.identity,0,new object[0]); // instanciar no photon ou no tipo que for usar
             fire.transform.rotation = shootPivot.transform.rotation;
@@ -29,12 +29,13 @@ public class Upgrading1_Skill1_Character1 : Skill1_Character1
             fire.GetComponent<Projectile_Skill1_Character1>().SetDamage(damage);
             fire.GetComponent<Projectile_Skill1_Character1>().SetRange(range);
             Shield(this.gameObject, 15);
-            shield.GetComponent<Shield>().SetDuration(30);
+            shield.GetComponent<Shield>().SetDuration(10);
+            shield.GetComponent<Shield>().SetShieldSkill3(false);
 
             if (!skill3)
             {
                 gameObject.GetComponent<PlayableCharacters>().SetUsedSkill(true);
-                cooldownCount = 0;
+                cooldownCount = cooldown;
             }
             else
             {

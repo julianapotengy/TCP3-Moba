@@ -9,6 +9,7 @@ public class Shield : MonoBehaviour
     private float timer;
     private float damageToTake;
     private float damageTaken;
+    protected bool shieldSkill3;
 
     void Start()
     {
@@ -22,6 +23,8 @@ public class Shield : MonoBehaviour
         transform.position = owner.transform.position;
         if(timer <= 0 || damageTaken >= damageToTake)
         {
+            owner.GetComponent<BaseScript>().OverDamageShield(damageTaken - damageToTake);
+            shieldSkill3 = false;
             DestroyShield();
         }
     }
@@ -50,5 +53,15 @@ public class Shield : MonoBehaviour
     public void SetDamageTaken(float dt)
     {
         damageTaken += dt;
+    }
+
+    public void SetShieldSkill3(bool s)
+    {
+        shieldSkill3 = s;
+    }
+
+    public bool GetShieldSkill3()
+    {
+        return shieldSkill3;
     }
 }

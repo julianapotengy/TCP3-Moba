@@ -5,9 +5,15 @@ using UnityEngine.UI;
 
 public class Skill3_Character1 : SkillsBase
 {
+    protected int nConjuration;
+    protected float timeConjAgain;
+    protected float timer;
+    protected bool invisible;
+    protected float timeInvi;
+
     private void Awake()
     {
-        skillName = "Skill 3";
+        skillName = "Modo Furtivo";
         description = "A personagem entra em modo furtivo, ganhando invisibilidade por um período máximo de tempo, " +
             "ou até usar alguma habilidade ativa, de item ou ataque básico.";
         level = 0;
@@ -21,10 +27,10 @@ public class Skill3_Character1 : SkillsBase
 
     public override void DoIt()
     {
-        if (cooldownCount >= cooldown && level >= 1)
+        if (cooldownCount <= 0 && level >= 1)
         {
-            Invisibility(20);
-            cooldownCount = 0;
+            Invisibility(timeInvi);
+            cooldownCount = cooldown;
         }
     }
 
@@ -33,7 +39,8 @@ public class Skill3_Character1 : SkillsBase
         maxLevel = 3;
         baseCooldown = 60;
         cooldown = baseCooldown;
-        cooldownCount = cooldown;
+        cooldownCount = 0;
+        timeInvi = 15;
 
         levelTxt = GameObject.Find("Skill3TextLevel").GetComponent<Text>();
         cooldownTxt = GameObject.Find("Skill3TextCD").GetComponent<Text>();
@@ -41,14 +48,14 @@ public class Skill3_Character1 : SkillsBase
 
     protected void BasicUpdate()
     {
-        cooldownCount += Time.deltaTime;
+        cooldownCount -= Time.deltaTime;
         Levels(3);
 
         levelTxt.text = "Nível: " + level;
-        if (cooldownCount <= cooldown)
+        if (cooldownCount <= 0)
         {
-            cooldownTxt.text = "TR: " + Mathf.Round(cooldownCount) + "s";
+            cooldownTxt.text = "TR: " + Mathf.Round(cooldown) + "s";
         }
-        else cooldownTxt.text = "TR: " + Mathf.Round(cooldown) + "s";
+        else cooldownTxt.text = "TR: " + Mathf.Round(cooldownCount) + "s";
     }
 }

@@ -10,7 +10,7 @@ namespace Assets.Scripts.Skills.Character1
     {
         private void Awake()
         {
-            skillName = "Passiva";
+            skillName = "Passiva - Inclemência da Caçadora";
             description = "Causa dano bônus com seus ataques básicos em alvos sob efeito de controle de grupo " +
                 "independente de quem aplicou o efeito.";
         }

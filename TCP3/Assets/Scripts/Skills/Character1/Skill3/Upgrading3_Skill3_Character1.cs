@@ -22,11 +22,11 @@ public class Upgrading3_Skill3_Character1 : Skill3_Character1
 
     public override void DoIt()
     {
-        if (cooldownCount >= cooldown && level >= 1)
+        if (cooldownCount <= 0 && level >= 1)
         {
-            Invisibility(20);
+            Invisibility(timeInvi);
             skills[0].DoIt1(true);
-            cooldownCount = 0;
+            cooldownCount = cooldown;
         }
     }
 }

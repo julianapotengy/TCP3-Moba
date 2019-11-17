@@ -20,10 +20,13 @@ public class Upgrading1_Skill3_Character1 : Skill3_Character1
 
     public override void DoIt()
     {
-        if (cooldownCount >= cooldown && level >= 1)
+        if (cooldownCount <= 0 && level >= 1)
         {
-            Invisibility(20);
-            cooldownCount = 0;
+            Invisibility(timeInvi);
+            Shield(this.gameObject, 15);
+            shield.GetComponent<Shield>().SetDuration(timeInvi + timeInvi * 0.5f);
+            shield.GetComponent<Shield>().SetShieldSkill3(true);
+            cooldownCount = cooldown;
         }
     }
 }

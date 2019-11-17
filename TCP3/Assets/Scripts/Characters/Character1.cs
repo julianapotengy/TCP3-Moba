@@ -18,6 +18,7 @@ public class Character1 : PlayableCharacters
         moveSpeed = baseMoveSpeed;
         temporaryMoveSpeed = moveSpeed;
 		atkSpeedCount = 2;
+        tookDamage = false;
         
         skills.Add(gameObject.AddComponent<Skill1_Character1>());
         skills.Add(gameObject.AddComponent<Skill2_Character1>());

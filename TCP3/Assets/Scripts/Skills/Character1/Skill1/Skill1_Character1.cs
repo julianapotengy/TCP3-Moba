@@ -11,7 +11,7 @@ public class Skill1_Character1 : SkillsBase
 
     private void Awake()
     {
-        skillName = "Habilidade 1";
+        skillName = "Granada de Pulso Elétrico";
         description = "Granada de pulso elétrico. A personagem joga uma granada, " +
             "que estoura no primeiro alvo que acertar, dando dano e aplicando efeito de lentidão no alvo por 2s.";
         level = 0;
@@ -25,7 +25,7 @@ public class Skill1_Character1 : SkillsBase
 
     public override void DoIt1(bool skill3)
     {
-        if (cooldownCount >= cooldown && level >= 1)
+        if (cooldownCount <= 0 && level >= 1)
         {
             GameObject fire = Instantiate<GameObject>(projectile, shootPivot.transform.position, Quaternion.identity);// PhotonNetwork.InstantiateSceneObject("tower_red_fire", firePivot.transform.position, Quaternion.identity,0,new object[0]); // instanciar no photon ou no tipo que for usar
             fire.transform.rotation = shootPivot.transform.rotation;
@@ -36,7 +36,7 @@ public class Skill1_Character1 : SkillsBase
             if (!skill3)
             {
                 gameObject.GetComponent<PlayableCharacters>().SetUsedSkill(true);
-                cooldownCount = 0;
+                cooldownCount = cooldown;
             }
             else
             {
@@ -63,7 +63,7 @@ public class Skill1_Character1 : SkillsBase
         maxLevel = 3;
         baseCooldown = 7;
         cooldown = baseCooldown;
-        cooldownCount = cooldown;
+        cooldownCount = 0;
         baseDamage = 30;
         damage = baseDamage;
         canUse = true;
@@ -76,15 +76,15 @@ public class Skill1_Character1 : SkillsBase
 
     protected void BasicUpdate()
     {
-        cooldownCount += Time.deltaTime;
+        cooldownCount -= Time.deltaTime;
         HitTarget();
         Levels(1);
 
         levelTxt.text = "Nível: " + level;
-        if (cooldownCount <= cooldown)
+        if (cooldownCount <= 0)
         {
-            cooldownTxt.text = "TR: " + Mathf.Round(cooldownCount) + "s";
+            cooldownTxt.text = "TR: " + Mathf.Round(cooldown) + "s";
         }
-        else cooldownTxt.text = "TR: " + Mathf.Round(cooldown) + "s";
+        else cooldownTxt.text = "TR: " + Mathf.Round(cooldownCount) + "s";
     }
 }

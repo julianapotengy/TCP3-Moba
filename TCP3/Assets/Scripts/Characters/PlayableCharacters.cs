@@ -220,18 +220,18 @@ public class PlayableCharacters : Characters
             timeInvisible -= Time.deltaTime;
             color.a = 0.5f;
             GetComponent<MeshRenderer>().material.color = color;
+            if (GetComponent<Upgrading2_Skill3_Character1>())
+            {
+                GetComponent<Upgrading2_Skill3_Character1>().SetInvisible(true);
+            }
 
-            if (timeInvisible <= 0 || usedSkill || usedAutoAtk)
+            if (timeInvisible <= 0 || usedSkill || usedAutoAtk || tookDamage)
             {
                 timeInvisible = 0;
 
-                if(skills[2] == GetComponent<Upgrading2_Skill3_Character1>())
-                {
-                    
-                }
-
                 usedSkill = false;
                 usedAutoAtk = false;
+                tookDamage = false;
                 invisible = false;
             }
         }
@@ -239,6 +239,10 @@ public class PlayableCharacters : Characters
         {
             color.a = 1;
             GetComponent<MeshRenderer>().material.color = color;
+            if (GetComponent<Upgrading2_Skill3_Character1>())
+            {
+                GetComponent<Upgrading2_Skill3_Character1>().SetInvisible(false);
+            }
         }
     }
     #endregion

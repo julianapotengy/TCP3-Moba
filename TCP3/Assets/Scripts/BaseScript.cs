@@ -21,6 +21,7 @@ public class BaseScript : MonoBehaviour
     public GameObject shootPivot;
     protected bool hasShield;
     protected GameObject shieldObj;
+    protected bool tookDamage;
 
     #region Life
     public float GetLife()
@@ -30,11 +31,25 @@ public class BaseScript : MonoBehaviour
 
     public void ReceiveDamage(float damage)
     {
-        if(hasShield)
+        if (hasShield)
         {
             shieldObj.GetComponent<Shield>().SetDamageTaken(damage);
+            if (shieldObj.GetComponent<Shield>().GetShieldSkill3() == false)
+            {
+                tookDamage = true;
+            }
         }
-        else life -= damage;
+        else
+        {
+            life -= damage;
+            tookDamage = true;
+        }
+    }
+
+    public void OverDamageShield(float damage)
+    {
+        life -= damage;
+        tookDamage = true;
     }
 
     public void Heal(float cure)
