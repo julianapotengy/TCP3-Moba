@@ -19,6 +19,7 @@ public class Character1 : PlayableCharacters
         temporaryMoveSpeed = moveSpeed;
 		atkSpeedCount = 2;
         tookDamage = false;
+        addedKill = false;
         
         skills.Add(gameObject.AddComponent<Skill1_Character1>());
         skills.Add(gameObject.AddComponent<Skill2_Character1>());
@@ -36,6 +37,7 @@ public class Character1 : PlayableCharacters
         canLevelUp = true;
         canUpSkill = true;
         color = GetComponent<MeshRenderer>().material.color;
+        respawnMax = 7;
     }
 
     private void Start()
@@ -45,31 +47,32 @@ public class Character1 : PlayableCharacters
 
     private void Update()
     {
-        PlayableAutoAttack();
-        Movement();
-        agent.speed = moveSpeed;
-        CheckAtkRange();
-        ExperienceSystem();
-        Heal(1 * Time.deltaTime);
         CheckLife();
-        UpSkills();
-        UseSkills();
-        TimeBuffingSpeed();
-        BuffingAttackDamage();
-        BuffingAttackSpeed();
-        Invisibility();
-        if (shieldObj != null)
+        if (!dead)
         {
-            hasShield = true;
+            PlayableAutoAttack();
+            Movement();
+            agent.speed = moveSpeed;
+            CheckAtkRange();
+            Heal(1 * Time.deltaTime);
+            UseSkills();
+            TimeBuffingSpeed();
+            BuffingAttackDamage();
+            BuffingAttackSpeed();
+            Invisibility();
+            if (shieldObj != null)
+            {
+                hasShield = true;
+            }
+            else hasShield = false;
+
+            levelTxt.text = "Nível: " + level;
+            lifeText.text = "Vida: " + Mathf.Round(life / 1) + " / " + maxLife;
+            atkDamageText.text = "Dano: " + atkDamage;
+            atkSpeedText.text = "Velocidade de ataque: " + atkSpeed;
+            moveSpeedText.text = "Velocidade de movimento: " + moveSpeed;
         }
-        else hasShield = false;
-
-        levelTxt.text = "Nível: " + level;
-        lifeText.text = "Vida: " + Mathf.Round(life / 1) + " / " + maxLife;
-        atkDamageText.text = "Dano: " + atkDamage;
-        atkSpeedText.text = "Velocidade de ataque: " + atkSpeed;
-        moveSpeedText.text = "Velocidade de movimento: " + moveSpeed;
-
+        
         #region Apresentacao
         XPAPRESENTACAO();
         Debug.Log("experience: " + experience + " level: " + level);
@@ -79,6 +82,8 @@ public class Character1 : PlayableCharacters
         }
         #endregion
 
+        ExperienceSystem();
+        UpSkills();
         if (skills[0] == null)
         {
             if (GetComponent<Upgrading1_Skill1_Character1>() != null)

@@ -7,7 +7,7 @@ public class BaseScript : MonoBehaviour
     protected int ID;
     protected string objName;
     protected float baseLife;
-    protected float life;
+    [SerializeField] protected float life;
     protected float maxLife;
     protected BaseScript target;
     protected float atkDamage;
@@ -22,6 +22,8 @@ public class BaseScript : MonoBehaviour
     protected bool hasShield;
     protected GameObject shieldObj;
     protected bool tookDamage;
+    protected GameObject lastHitter;
+    protected int level;
 
     #region Life
     public float GetLife()
@@ -29,7 +31,7 @@ public class BaseScript : MonoBehaviour
         return life;
     }
 
-    public void ReceiveDamage(float damage)
+    public void ReceiveDamage(float damage, GameObject damager)
     {
         if (hasShield)
         {
@@ -43,6 +45,10 @@ public class BaseScript : MonoBehaviour
         {
             life -= damage;
             tookDamage = true;
+        }
+        if (damager.GetComponent<PlayableCharacters>())
+        {
+            lastHitter = damager;
         }
     }
 
@@ -68,6 +74,12 @@ public class BaseScript : MonoBehaviour
         {
             life = maxLife;
         }
+        if(life <= 0)
+        {
+            dead = true;
+            Die();
+        }
+        else dead = false;
     }
 
     public bool IsDead()
@@ -75,13 +87,9 @@ public class BaseScript : MonoBehaviour
         return dead;
     }
 
-    public void Die()
+    protected virtual void Die()
     {
-        if (life <= 0)
-        {
-            dead = true;
-        }
-        else dead = false;
+        
     }
 
     public bool GetHasShield()
@@ -126,6 +134,7 @@ public class BaseScript : MonoBehaviour
         }
         fire.GetComponent<Projectile>().SetDamage(atkDamage);
         fire.GetComponent<Projectile>().SetTarget(GetTarget());
+        fire.GetComponent<Projectile>().SetOwner(this.gameObject);
     }
     #endregion
 

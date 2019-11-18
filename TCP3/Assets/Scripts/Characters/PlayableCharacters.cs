@@ -6,12 +6,20 @@ using UnityEngine.UI;
 
 public class PlayableCharacters : Characters
 {
-    protected int level;
+    
     protected Text levelTxt;
     protected Text lifeText;
     protected Text atkDamageText;
     protected Text atkSpeedText;
     protected Text moveSpeedText;
+    protected float respawnTimer;
+    protected float respawnMax;
+    public int minionsFarmed;
+    public int kills;
+    public int deaths;
+    protected bool addedKill;
+    public Transform spawnPlace;
+    protected float savedMovespeed;
     #region Skills
     protected int passiveCharacter;
     protected int passiveClass;
@@ -248,9 +256,9 @@ public class PlayableCharacters : Characters
     #endregion
 
     #region Experience
-    protected void GainExperienceInLane(float quantity)
+    public void GainExperienceInTime(float quantity)
     {
-        if(level >= 1 && level <= 11)
+        if(level >= 1 && level <= 9)
         {
             experience += quantity * Time.deltaTime;
             if(experience >= 100)
@@ -261,9 +269,9 @@ public class PlayableCharacters : Characters
         }
     }
 
-    protected void GainExperienceInJungle(float quantity)
+    public void GainExperienceInMinion(float quantity)
     {
-        if (level >= 1 && level <= 11)
+        if (level >= 1 && level <= 9)
         {
             experience += quantity;
             if (experience >= 100)
@@ -311,7 +319,7 @@ public class PlayableCharacters : Characters
         {
             if (level >= 1 && level <= 8)
             {
-                GainExperienceInJungle(100);
+                GainExperienceInMinion(100);
             }
         }
     }
@@ -374,4 +382,36 @@ public class PlayableCharacters : Characters
         usedSkill = b;
     }
     #endregion
+
+    protected override void Die()
+    {
+        if(!addedKill)
+        {
+            deaths += 1;
+            savedMovespeed = moveSpeed;
+            //moveSpeed = 0;
+            if (lastHitter != null)
+            {
+                lastHitter.GetComponent<PlayableCharacters>().GainExperienceInMinion(level * 2);
+                lastHitter.GetComponent<PlayableCharacters>().kills += 1;
+            }
+            addedKill = true;
+        }
+        Respawn();
+    }
+
+    protected void Respawn()
+    {
+        respawnTimer += Time.deltaTime;
+        if(respawnTimer >= respawnMax)
+        {
+            life = maxLife;
+            moveSpeed = savedMovespeed;
+            this.transform.position = spawnPlace.position;
+            targetDestination = spawnPlace.position;
+            agent.SetDestination(targetDestination);
+            addedKill = false;
+            respawnTimer = 0;
+        }
+    }
 }

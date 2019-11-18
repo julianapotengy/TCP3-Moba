@@ -48,16 +48,18 @@ public class Upgrading3_Skill1_Character1 : Skill1_Character1
         if (hitTarget)
         {
             initialTarget = target;
-            Collider[] charactersOnArea = Physics.OverlapSphere(initialTarget.position, 4, 8);
+            //Debug.Log("inicial: " + initialTarget.name);
+            Collider[] charactersOnArea = Physics.OverlapSphere(initialTarget.position, 10);
             foreach (Collider c in charactersOnArea)
             {
-                Debug.Log(c.name);
-                if(c.GetComponent<Characters>() != null && c.tag != "BlueTeam")
+                //Debug.Log(c.name);
+                if(c.GetComponent<Characters>() && c.tag != this.tag)
                 {
                     target = c.transform;
+                    //Debug.Log(target.name + " target");
                     target.GetComponent<Characters>().SetInControlGroup(true);
                     CauseDamage();
-                    ChangeSpeed(-0.15f, 4, c.transform);
+                    ChangeSpeed(-0.15f, 2, c.transform);
                 }
             }
             hitTarget = false;

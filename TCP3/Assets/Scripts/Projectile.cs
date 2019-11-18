@@ -7,6 +7,7 @@ public class Projectile : MonoBehaviour
     float speed;
     float damage;
     Transform target;
+    GameObject owner;
 
     private void Awake()
     {
@@ -20,7 +21,7 @@ public class Projectile : MonoBehaviour
 
     void HitTarget()
     {
-        target.GetComponent<BaseScript>().ReceiveDamage(damage);
+        target.GetComponent<BaseScript>().ReceiveDamage(damage, owner);
         Destroy(gameObject);
     }
 	
@@ -34,6 +35,11 @@ public class Projectile : MonoBehaviour
         this.damage = damage;
     }
 	
+    public void SetOwner(GameObject gm)
+    {
+        owner = gm;
+    }
+
 	private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject == target.gameObject)

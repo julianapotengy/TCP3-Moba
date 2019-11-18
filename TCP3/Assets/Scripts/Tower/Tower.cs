@@ -50,6 +50,7 @@ public class Tower : Structures
         GameObject fire = Instantiate<GameObject>(firePivot, shootPivot.transform.position, Quaternion.identity, shootPivot.transform);// PhotonNetwork.InstantiateSceneObject("tower_red_fire", firePivot.transform.position, Quaternion.identity,0,new object[0]); // instanciar no photon ou no tipo que for usar
         fire.GetComponent<TowerShoot>().SetDamage(atkDamage);
         fire.GetComponent<TowerShoot>().SetTarget(selected.gameObject);
+        fire.GetComponent<TowerShoot>().owner = this.gameObject;
     }
 
     public void Priority()

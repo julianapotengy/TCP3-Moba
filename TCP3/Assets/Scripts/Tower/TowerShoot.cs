@@ -6,6 +6,7 @@ public class TowerShoot : MonoBehaviour
 {
     private GameObject target;
     public float damage;
+    public GameObject owner;
     
     void Update()
     {
@@ -26,7 +27,7 @@ public class TowerShoot : MonoBehaviour
     {
         if (other.gameObject.CompareTag("BlueTeam"))
         {
-            other.gameObject.GetComponent<PlayableCharacters>().ReceiveDamage(damage);
+            other.gameObject.GetComponent<PlayableCharacters>().ReceiveDamage(damage, owner);
             Destroy(this.gameObject);
         }
     }

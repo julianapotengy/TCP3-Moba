@@ -114,16 +114,16 @@ public class SkillsBase : MonoBehaviour
 
     protected void CauseDamage()
     {
-        target.GetComponent<BaseScript>().ReceiveDamage(damage);
+        target.GetComponent<BaseScript>().ReceiveDamage(damage, this.gameObject);
     }
 
     protected void CauseDamageInTime(float t, float d)
     {
-        target.GetComponent<BaseScript>().ReceiveDamage(damage);
+        target.GetComponent<BaseScript>().ReceiveDamage(damage, this.gameObject);
         while (timeCount <= t)
         {
             timeCount += Time.deltaTime;
-            target.GetComponent<BaseScript>().ReceiveDamage(d);
+            target.GetComponent<BaseScript>().ReceiveDamage(d, this.gameObject);
         }
     }
     #endregion
