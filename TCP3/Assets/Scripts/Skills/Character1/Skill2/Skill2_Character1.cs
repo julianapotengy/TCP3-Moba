@@ -23,9 +23,11 @@ public class Skill2_Character1 : SkillsBase
     {
         if (cooldownCount <= 0 && level >= 1)
         {
+            animator.SetTrigger("Skill2");
             gameObject.GetComponent<PlayableCharacters>().SetUsedSkill(true);
             gameObject.GetComponent<PlayableCharacters>().SetUsedSkill(true);
             gameObject.GetComponent<PlayableCharacters>().BuffAttackDamage(3, 0.2f);
+            gameObject.GetComponent<PlayableCharacters>().audioSrc.PlayOneShot(gameObject.GetComponent<PlayableCharacters>().skill2Sound);
             cooldownCount = cooldown;
         }
     }
@@ -36,6 +38,7 @@ public class Skill2_Character1 : SkillsBase
         baseCooldown = 14;
         cooldown = baseCooldown;
         cooldownCount = 0;
+        animator = this.GetComponent<Animator>();
 
         levelTxt = GameObject.Find("Skill2TextLevel").GetComponent<Text>();
         cooldownTxt = GameObject.Find("Skill2TextCD").GetComponent<Text>();
@@ -46,6 +49,7 @@ public class Skill2_Character1 : SkillsBase
         cooldownCount -= Time.deltaTime;
         Levels(2);
 
+        levelTxt.text = "Nível: " + level;
         if (cooldownCount <= 0)
         {
             cooldownTxt.text = "TR: " + Mathf.Round(cooldown) + "s";

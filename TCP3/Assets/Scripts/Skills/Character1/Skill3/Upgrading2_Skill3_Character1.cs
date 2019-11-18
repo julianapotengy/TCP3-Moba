@@ -40,6 +40,7 @@ public class Upgrading2_Skill3_Character1 : Skill3_Character1
         }
         if (cooldownCount <= 0 && level >= 1)
         {
+            animator.SetTrigger("Skill3");
             nConjuration += 1;
             if(nConjuration == 1)
             {
@@ -50,6 +51,7 @@ public class Upgrading2_Skill3_Character1 : Skill3_Character1
                 Invisibility(timeInvi / 2);
                 nConjuration = 0;
             }
+            gameObject.GetComponent<PlayableCharacters>().audioSrc.PlayOneShot(gameObject.GetComponent<PlayableCharacters>().skill3Sound);
             cooldownCount = cooldown;
         }
     }

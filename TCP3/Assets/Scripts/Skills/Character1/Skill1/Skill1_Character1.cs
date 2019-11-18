@@ -27,11 +27,13 @@ public class Skill1_Character1 : SkillsBase
     {
         if (cooldownCount <= 0 && level >= 1)
         {
+            animator.SetTrigger("Skill1");
             GameObject fire = Instantiate<GameObject>(projectile, shootPivot.transform.position, Quaternion.identity);// PhotonNetwork.InstantiateSceneObject("tower_red_fire", firePivot.transform.position, Quaternion.identity,0,new object[0]); // instanciar no photon ou no tipo que for usar
             fire.transform.rotation = shootPivot.transform.rotation;
             fire.GetComponent<Projectile_Skill1_Character1>().SetParent(gameObject.GetComponent<Skill1_Character1>());
             fire.GetComponent<Projectile_Skill1_Character1>().SetDamage(damage);
             fire.GetComponent<Projectile_Skill1_Character1>().SetRange(range);
+            gameObject.GetComponent<PlayableCharacters>().audioSrc.PlayOneShot(gameObject.GetComponent<PlayableCharacters>().skill1Sound);
 
             if (!skill3)
             {
@@ -68,10 +70,11 @@ public class Skill1_Character1 : SkillsBase
         damage = baseDamage;
         canUse = true;
         choosedUpgrading = false;
+        animator = this.GetComponent<Animator>();
 
         levelTxt = GameObject.Find("Skill1TextLevel").GetComponent<Text>();
         cooldownTxt = GameObject.Find("Skill1TextCD").GetComponent<Text>();
-        shootPivot = GameObject.Find("Character");
+        shootPivot = GameObject.Find("Skill1FirePoint");
     }
 
     protected void BasicUpdate()

@@ -36,6 +36,8 @@ public class SkillsBase : MonoBehaviour
     protected GameObject shieldPrefab;
     protected GameObject shield;
 
+    protected Animator animator;
+
     #region O que faz
     protected void Invisibility(float timeInvisible)
     {

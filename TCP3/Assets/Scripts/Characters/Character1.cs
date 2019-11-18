@@ -9,8 +9,11 @@ public class Character1 : PlayableCharacters
 {
 	private void Awake()
     {
+        deadScreen.SetActive(false);
         objName = "Character 1";
+        life = 200;
         baseLife = 200;
+        SetMaxLife(baseLife);
         atkDamage = 10;
         atkRange = 10;
         atkSpeed = 2;
@@ -27,6 +30,7 @@ public class Character1 : PlayableCharacters
 
         agent = this.GetComponent<NavMeshAgent>();
         agent.speed = moveSpeed;
+        animator = GetComponent<Animator>();
 
         levelTxt = GameObject.Find("LevelText").GetComponent<Text>();
         lifeText = GameObject.Find("LifeText").GetComponent<Text>();
@@ -38,6 +42,15 @@ public class Character1 : PlayableCharacters
         canUpSkill = true;
         color = GetComponent<MeshRenderer>().material.color;
         respawnMax = 7;
+        recallTime = 9;
+
+        audioSrc = GetComponent<AudioSource>();
+        autoAtkSound = Resources.Load<AudioClip>("Sounds/BasicAttack");
+        skill1Sound = Resources.Load<AudioClip>("Sounds/Skill1");
+        skill2Sound = Resources.Load<AudioClip>("Sounds/Skill2");
+        skill3Sound = Resources.Load<AudioClip>("Sounds/Skill3");
+        //deathSound = Resources.Load<AudioClip>("Sounds/Death");
+        recallSound = Resources.Load<AudioClip>("Sounds/Recall");
     }
 
     private void Start()
@@ -60,6 +73,7 @@ public class Character1 : PlayableCharacters
             BuffingAttackDamage();
             BuffingAttackSpeed();
             Invisibility();
+            Recall();
             if (shieldObj != null)
             {
                 hasShield = true;

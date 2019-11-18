@@ -29,7 +29,9 @@ public class Skill3_Character1 : SkillsBase
     {
         if (cooldownCount <= 0 && level >= 1)
         {
+            animator.SetTrigger("Skill3");
             Invisibility(timeInvi);
+            gameObject.GetComponent<PlayableCharacters>().audioSrc.PlayOneShot(gameObject.GetComponent<PlayableCharacters>().skill3Sound);
             cooldownCount = cooldown;
         }
     }
@@ -41,7 +43,7 @@ public class Skill3_Character1 : SkillsBase
         cooldown = baseCooldown;
         cooldownCount = 0;
         timeInvi = 15;
-
+        animator = this.GetComponent<Animator>();
         levelTxt = GameObject.Find("Skill3TextLevel").GetComponent<Text>();
         cooldownTxt = GameObject.Find("Skill3TextCD").GetComponent<Text>();
     }

@@ -22,9 +22,11 @@ public class Upgrading2_Skill2_Character1 : Skill2_Character1
     {
         if (cooldownCount <= 0 && level >= 1)
         {
+            animator.SetTrigger("Skill2");
             gameObject.GetComponent<PlayableCharacters>().SetUsedSkill(true);
             gameObject.GetComponent<PlayableCharacters>().BuffAttackDamage(3, 0.2f);
             gameObject.GetComponent<PlayableCharacters>().BoolDoubleDamage(true);
+            gameObject.GetComponent<PlayableCharacters>().audioSrc.PlayOneShot(gameObject.GetComponent<PlayableCharacters>().skill2Sound);
             cooldownCount = cooldown;
         }
     }

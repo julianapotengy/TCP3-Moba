@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class PlayableCharacters : Characters
 {
-    
     protected Text levelTxt;
     protected Text lifeText;
     protected Text atkDamageText;
@@ -19,7 +18,12 @@ public class PlayableCharacters : Characters
     public int deaths;
     protected bool addedKill;
     public Transform spawnPlace;
-    protected float savedMovespeed;
+    protected float recallTimer;
+    protected float recallTime;
+    protected bool recalling;
+    protected bool moved;
+    protected Animator animator;
+    [SerializeField] protected GameObject deadScreen;
     #region Skills
     protected int passiveCharacter;
     protected int passiveClass;
@@ -51,6 +55,15 @@ public class PlayableCharacters : Characters
     protected float qAtkSpeed;
     protected float timeAtkSpeed;
     #endregion
+    #region Sound Effects
+    public AudioClip autoAtkSound;
+    public AudioClip skill1Sound;
+    public AudioClip skill2Sound;
+    public AudioClip skill3Sound;
+    public AudioClip deathSound;
+    public AudioClip recallSound;
+    public AudioSource audioSrc;
+    #endregion
 
     protected List<SkillsBase> skills = new List<SkillsBase>(3);
 
@@ -65,7 +78,7 @@ public class PlayableCharacters : Characters
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.transform.tag == "RedTeam" || hit.transform.tag == "NormalType")
+                if (hit.transform.tag != this.tag)
                 {
                     for (int i = 0; i < detector.GetCharactersOnArea().Count; i++)
                     {
@@ -87,6 +100,8 @@ public class PlayableCharacters : Characters
         if (atkSpeedCount >= atkSpeed && target != null)
         {
             usedAutoAtk = true;
+            animator.SetTrigger("Attack");
+            audioSrc.PlayOneShot(autoAtkSound);
             AutoAttack();
             if (buffingAtkDamage)
             {
@@ -95,12 +110,10 @@ public class PlayableCharacters : Characters
                     if (stealLife)
                     {
                         StealLife(quantityToSteal);
-                        Debug.Log("Habilidade 2 Roubar Vida");
                         stealLife = false;
                     }
                     if(doubleDamage)
                     {
-                        Debug.Log("Habilidade 2 Dano em dobro");
                         doubleDamage = false;
                     }
                 }
@@ -131,8 +144,16 @@ public class PlayableCharacters : Characters
             {
                 targetDestination = hit.point;
                 agent.SetDestination(targetDestination);
+                moved = true;
             }
         }
+        else moved = false;
+
+        if(this.transform.position != agent.destination)
+        {
+            animator.SetBool("isMoving", true);
+        }
+        else animator.SetBool("isMoving", false);
     }
 
     #region Skills effect
@@ -287,7 +308,6 @@ public class PlayableCharacters : Characters
     {
         if(level.Equals(1) && canLevelUp)
         {
-            SetMaxLife(baseLife);
             life = maxLife;
             LevelUp();
         }
@@ -387,9 +407,12 @@ public class PlayableCharacters : Characters
     {
         if(!addedKill)
         {
+            //audioSrc.PlayOneShot(deathSound);
+            deadScreen.SetActive(true);
+            animator.SetBool("isDead", true);
+            animator.SetTrigger("Died");
             deaths += 1;
-            savedMovespeed = moveSpeed;
-            //moveSpeed = 0;
+            agent.SetDestination(this.transform.position);
             if (lastHitter != null)
             {
                 lastHitter.GetComponent<PlayableCharacters>().GainExperienceInMinion(level * 2);
@@ -405,13 +428,53 @@ public class PlayableCharacters : Characters
         respawnTimer += Time.deltaTime;
         if(respawnTimer >= respawnMax)
         {
+            deadScreen.SetActive(false);
+            animator.SetBool("isDead", false);
             life = maxLife;
-            moveSpeed = savedMovespeed;
             this.transform.position = spawnPlace.position;
             targetDestination = spawnPlace.position;
             agent.SetDestination(targetDestination);
             addedKill = false;
             respawnTimer = 0;
+        }
+    }
+
+    protected void Recall()
+    {
+        if(Input.GetKey(InputManager.IM.recall))
+        {
+            recalling = true;
+        }
+        if(usedSkill || usedAutoAtk || moved || tookDamage)
+        {
+            usedSkill = false;
+            usedAutoAtk = false;
+            tookDamage = false;
+            moved = false;
+            recalling = false;
+        }
+
+        if (recalling)
+        {
+            agent.SetDestination(this.transform.position);
+            animator.SetBool("isRecalling", true);
+            recallTimer += Time.deltaTime;
+            audioSrc.clip = recallSound;
+            audioSrc.Play();
+            if (recallTimer >= recallTime)
+            {
+                this.transform.position = spawnPlace.position;
+                targetDestination = spawnPlace.position;
+                agent.SetDestination(targetDestination);
+                recallTimer = 0;
+                recalling = false;
+            }
+        }
+        else
+        {
+            animator.SetBool("isRecalling", false);
+            audioSrc.Stop();
+            audioSrc.clip = null;
         }
     }
 }

@@ -24,8 +24,10 @@ public class Upgrading3_Skill3_Character1 : Skill3_Character1
     {
         if (cooldownCount <= 0 && level >= 1)
         {
+            animator.SetTrigger("Skill3");
             Invisibility(timeInvi);
             skills[0].DoIt1(true);
+            gameObject.GetComponent<PlayableCharacters>().audioSrc.PlayOneShot(gameObject.GetComponent<PlayableCharacters>().skill3Sound);
             cooldownCount = cooldown;
         }
     }

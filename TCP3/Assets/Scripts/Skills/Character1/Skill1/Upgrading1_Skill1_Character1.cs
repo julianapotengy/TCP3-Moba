@@ -23,6 +23,7 @@ public class Upgrading1_Skill1_Character1 : Skill1_Character1
     {
         if (cooldownCount <= 0 && level >= 1)
         {
+            animator.SetTrigger("Skill1");
             GameObject fire = Instantiate<GameObject>(projectile, shootPivot.transform.position, Quaternion.identity);// PhotonNetwork.InstantiateSceneObject("tower_red_fire", firePivot.transform.position, Quaternion.identity,0,new object[0]); // instanciar no photon ou no tipo que for usar
             fire.transform.rotation = shootPivot.transform.rotation;
             fire.GetComponent<Projectile_Skill1_Character1>().SetParent(this);
@@ -31,6 +32,7 @@ public class Upgrading1_Skill1_Character1 : Skill1_Character1
             Shield(this.gameObject, 15);
             shield.GetComponent<Shield>().SetDuration(10);
             shield.GetComponent<Shield>().SetShieldSkill3(false);
+            gameObject.GetComponent<PlayableCharacters>().audioSrc.PlayOneShot(gameObject.GetComponent<PlayableCharacters>().skill1Sound);
 
             if (!skill3)
             {
