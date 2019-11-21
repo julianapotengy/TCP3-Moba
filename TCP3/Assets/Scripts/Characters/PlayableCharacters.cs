@@ -54,6 +54,9 @@ public class PlayableCharacters : Characters
     protected float timeBuffingAtkSpeed;
     protected float qAtkSpeed;
     protected float timeAtkSpeed;
+    protected float timeBeingSeen;
+    protected bool beingSeen;
+    [SerializeField] protected GameObject eyeObj;
     #endregion
     #region Sound Effects
     public AudioClip autoAtkSound;
@@ -105,6 +108,10 @@ public class PlayableCharacters : Characters
             AutoAttack();
             if (buffingAtkDamage)
             {
+                if(beingSeen)
+                {
+                    BeingSeen();
+                }
                 if (quantityAtk == 1)
                 {
                     if (stealLife)
@@ -179,6 +186,7 @@ public class PlayableCharacters : Characters
 
                 stealLife = false;
                 doubleDamage = false;
+                beingSeen = false;
                 buffingAtkDamage = false;
             }
         }
@@ -274,6 +282,22 @@ public class PlayableCharacters : Characters
             }
         }
     }
+
+    public void CanBeSeen(float time)
+    {
+        beingSeen = true;
+        timeBeingSeen = time;
+    }
+
+    protected void BeingSeen()
+    {
+        timeBeingSeen -= Time.deltaTime;
+        GameObject eye = Instantiate(eyeObj, this.gameObject.transform);
+        if (timeBeingSeen <= 0)
+        {
+            //eye = 
+        }
+    }
     #endregion
 
     #region Experience
@@ -315,12 +339,18 @@ public class PlayableCharacters : Characters
         {
             SetMaxLife(Mathf.Round(maxLife / 10));
             life += Mathf.Round(maxLife / 10);
+            atkDamage += Mathf.Round(atkDamage * 0.2f);
+            temporaryAtkDamage += Mathf.Round(temporaryAtkDamage / 10);
+            atkSpeed += Mathf.Round((atkSpeed * -0.15f) * 10) / 10;
             LevelUp();
         }
         else if((level.Equals(3) || level.Equals(6) || level.Equals(9)) && canLevelUp)
         {
             SetMaxLife(Mathf.Round(maxLife / 10));
             life += Mathf.Round(maxLife / 10);
+            atkDamage += Mathf.Round(atkDamage * 0.2f);
+            temporaryAtkDamage += Mathf.Round(temporaryAtkDamage / 10);
+            atkSpeed += Mathf.Round((atkSpeed * -0.15f) * 10) / 10;
             ultToUp += 1;
             LevelUp();
         }

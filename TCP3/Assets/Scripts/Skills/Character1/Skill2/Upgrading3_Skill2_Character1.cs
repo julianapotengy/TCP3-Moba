@@ -18,7 +18,7 @@ public class Upgrading3_Skill2_Character1 : Skill2_Character1
     {
         BasicUpdate();
     }
-    // SERVIDOR
+    // PRECISA DO SERVIDOR
     public override void DoIt()
     {
         if (cooldownCount <= 0 && level >= 1)
@@ -26,7 +26,10 @@ public class Upgrading3_Skill2_Character1 : Skill2_Character1
             animator.SetTrigger("Skill2");
             gameObject.GetComponent<PlayableCharacters>().SetUsedSkill(true);
             target.GetComponent<Characters>().SetInControlGroup(true);
-            gameObject.GetComponent<PlayableCharacters>().BuffAttackDamage(3, 0.2f);
+            if (target.GetComponent<PlayableCharacters>())
+            {
+                target.GetComponent<PlayableCharacters>().CanBeSeen(1f);
+            }
             gameObject.GetComponent<PlayableCharacters>().audioSrc.PlayOneShot(gameObject.GetComponent<PlayableCharacters>().skill2Sound);
             cooldownCount = cooldown;
         }

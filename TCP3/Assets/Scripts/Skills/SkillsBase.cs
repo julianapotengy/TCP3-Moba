@@ -58,6 +58,11 @@ public class SkillsBase : MonoBehaviour
         shieldScript.SetDamageToTake(damage);
     }
 
+    protected void SeeEnemy(GameObject target)
+    {
+
+    }
+
     protected void Stun()
     {
 

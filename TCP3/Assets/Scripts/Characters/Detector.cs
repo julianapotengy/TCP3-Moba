@@ -8,11 +8,13 @@ public class Detector : Characters
     {
         this.name = "Detector_" + gameObject.transform.parent.GetComponent<BaseScript>().GetName();
         this.transform.localScale = new Vector3(gameObject.transform.parent.GetComponent<BaseScript>().GetAtkRange(), 0.0005f, gameObject.transform.parent.GetComponent<BaseScript>().GetAtkRange());
+        this.transform.position = gameObject.transform.parent.transform.position;
     }
 
     private void Update()
     {
         this.transform.localScale = new Vector3(gameObject.transform.parent.GetComponent<BaseScript>().GetAtkRange(), 0.0005f, gameObject.transform.parent.GetComponent<BaseScript>().GetAtkRange());
+        this.transform.position = gameObject.transform.parent.transform.position;
     }
 
     private void OnTriggerEnter(Collider other)
